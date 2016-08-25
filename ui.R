@@ -1,0 +1,36 @@
+shinyUI(
+  fluidPage(
+    
+  titlePanel("HR Time Series Forecasting"),
+  sidebarLayout(
+    sidebarPanel(selectInput("sel_hrTS", label = ("Choose HR metric to forecast:"),
+                             choices = c("Unplanned Leave (Days per FTE)",
+                                         "Planned Leave (Days per FTE)",
+                                         "Ongoing Workforce (HC)",
+                                         "Non-Ongoing Workforce (HC)",
+                                         "Casual Workforce (HC)",
+                                         "Overall Ongoing Separation Rate (%)",
+                                         "Natural Attrition Separation Rate (%)",
+                                         "Redundancy Separation Rate (%)",
+                                         "Higher Duties Allowance (%)",
+                                         "Substantive Vertical Mobility (%)",
+                                         "Average Age (Years)",
+                                         "Average ATO Tenure (Years)",
+                                         "Average APS Tenure (Years)",
+                                         "Average Female Salary (% of Average Male Salary)"),
+                             selected = "Unplanned Leave (Days per FTE)")
+                 , br()
+                 , sliderInput("fcast_mnths", label = ("Choose number of months to forecast:"),
+                               min = 1, max = 12, step = 1, value = 6)
+    ),
+    
+    mainPanel(
+      plotlyOutput('forecastPlot')
+      , downloadButton('downloadData', 'Download Data')
+      , br(), br()
+      , dataTableOutput(outputId="tsTable")
+      
+    )
+   )
+  )
+)
