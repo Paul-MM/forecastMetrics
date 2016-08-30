@@ -5,11 +5,7 @@ suppressMessages(library(plotly))         # interactive plots
 suppressMessages(library(readr))          # fast I/O
 suppressMessages(library(dplyr))          # data wrangling 
 
-# Set working directory for data load 
-wd <- "/data/anet10/shiny/test-ls/InDevelopment/wa_dashboard/"
-setwd(wd)
-
-source("HWplot.R")# ggplot Holt Winters fn
+source("data/HWplot.R")# ggplot Holt Winters fn
 
 #__________________________________________________________________________________________________#
 
