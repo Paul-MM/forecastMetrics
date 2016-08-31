@@ -77,38 +77,6 @@ ts_ong <- ts(ts_ong$R12_Ongoing_Rate, start = c(2008, 7), frequency = 12)
 
 #__________________________________________________________________________________________________#
 
-# Higher Duties
-
-# load data
-ts_hd <- read_csv("data/ts_hd.csv")
-
-# ts start date manipulation
-ts_hd_dt    <- as.data.frame(ts_hd) # need to coerce tbl.df back to data.frame 
-ts_hd_dt    <- as.Date(ts_hd_dt[1,2]) # once back to data.frame can as.Date on ts_hd_dt[1,2]
-ts_strt_mth <- month(ts_hd_dt)
-ts_strt_yr  <- year(ts_hd_dt)
-
-# create time series
-ts_hd <- ts(ts_hd$HD, start = c(ts_strt_yr, ts_strt_mth), frequency = 12) 
-
-#__________________________________________________________________________________________________#
-
-# Vertical mobility 
-
-# load data
-ts_vm <- read_csv("data/ts_vm.csv")
-
-# ts start date manipulation
-ts_vm_dt    <- as.data.frame(ts_vm) # need to coerce tbl.df back to data.frame 
-ts_vm_dt    <- as.Date(ts_vm_dt[1,2]) # once back to data.frame can as.Date on ts_vm_dt[1,2]
-ts_strt_mth <- month(ts_vm_dt)
-ts_strt_yr  <- year(ts_vm_dt)
-
-# create time series
-ts_vm <- ts(ts_vm$VM, start = c(ts_strt_yr, ts_strt_mth), frequency = 12) 
-
-#__________________________________________________________________________________________________#
-
 # Age 
 ts_age <- read_csv("data/ts_age.csv")
 ts_age <- ts(ts_age$Average_Age, start = c(2007, 7), frequency = 12)

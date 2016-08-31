@@ -12,8 +12,6 @@ shinyUI(
                                          "Overall Ongoing Separation Rate (%)",
                                          "Natural Attrition Separation Rate (%)",
                                          "Redundancy Separation Rate (%)",
-                                         "Higher Duties Allowance (%)",
-                                         "Substantive Vertical Mobility (%)",
                                          "Average Age (Years)",
                                          "Average ATO Tenure (Years)",
                                          "Average APS Tenure (Years)",

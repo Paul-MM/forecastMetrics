@@ -11,8 +11,6 @@ datasetForeCInput <- reactive({
          "Overall Ongoing Separation Rate (%)" = ts_ong,
          "Natural Attrition Separation Rate (%)" = ts_attr,
          "Redundancy Separation Rate (%)" = ts_rdncy,
-         "Higher Duties Allowance (%)" = ts_hd,
-         "Substantive Vertical Mobility (%)" = ts_vm,
          "Average Age (Years)" = ts_age, 
          "Average ATO Tenure (Years)" = ts_atoTnr,
          "Average APS Tenure (Years)" = ts_apsTnr,
