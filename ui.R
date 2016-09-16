@@ -1,7 +1,14 @@
 shinyUI(
   fluidPage(
     
+  # CSS style for navbar html - added padding-top:50px; to .h2,h2 to accommodate navbar
+  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.min.css")),
+  
+  # Navbar HTML
+  includeHTML("www/navbar.html"),
+    
   titlePanel("HR Time Series Forecasting"),
+  
   sidebarLayout(
     sidebarPanel(selectInput("sel_hrTS", label = ("Choose HR metric to forecast:"),
                              choices = c("Unplanned Leave (Days per FTE)",
