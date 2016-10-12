@@ -2,11 +2,7 @@
 
 ################################################################################
 
-# This script extracts Casual HC for forecasting in wa_dashboard
-
-# Parent script is updateForecastApps.sh
-# SQL file is forecastCasHC.sql 
-# Outputs forecastCasHC.csv for globalPreProcess.R
+# This script extracts Casual HC for forecasting 
 
 ################################################################################
 

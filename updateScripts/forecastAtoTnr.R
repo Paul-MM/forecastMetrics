@@ -2,11 +2,7 @@
 
 ################################################################################
 
-# This script extracts ATO Tenure from dwh for forecasting in wa_dashboard
-
-# Parent script is updateForecastApps.sh
-# SQL file is forecastAtoTnr.sql 
-# Outputs forecastAtoTnr.csv for globalPreProcess.R
+# This script extracts ATO Tenure from dwh for forecasting
 
 ################################################################################
 

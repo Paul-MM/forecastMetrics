@@ -2,11 +2,7 @@
 
 ################################################################################
 
-# This script calculates the separation rate for forecasting in wa_dashboard
-
-# Parent script is updateForecastApps.sh
-# SQL files are forecastSEPN1.sql and forecastSEPN2.sql
-# Outputs forecastSEPN.csv for globalPreProcess.R
+# This script calculates the separation rate for forecasting
 
 ################################################################################
 

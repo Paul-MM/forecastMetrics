@@ -2,11 +2,7 @@
 
 ################################################################################
 
-# This script extracts Age from dwh for forecasting in wa_dashboard
-
-# Parent script is updateForecastApps.sh
-# SQL file is forecastAge.sql 
-# Outputs forecastAge.csv for globalPreProcess.R
+# This script extracts Age from dwh for forecasting
 
 ################################################################################
 

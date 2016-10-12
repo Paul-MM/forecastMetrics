@@ -2,11 +2,7 @@
 
 ################################################################################
 
-# This script extracts Non-ongoing HCfor forecasting in wa_dashboard
-
-# Parent script is updateForecastApps.sh
-# SQL file is forecastNonHC.sql 
-# Outputs forecastNonHC.csv for globalPreProcess.R
+# This script extracts Non-ongoing HC for forecasting
 
 ################################################################################
 

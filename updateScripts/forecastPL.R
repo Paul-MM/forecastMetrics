@@ -2,11 +2,7 @@
 
 ################################################################################
 
-# This script extracts Planned Leave for forecasting in wa_dashboard
-
-# Parent script is updateForecastApps.sh
-# SQL file is forecastPL.sql 
-# Outputs forecastPL.csv for globalPreProcess.R
+# This script extracts planned leave for forecasting
 
 ################################################################################
 

@@ -2,11 +2,7 @@
 
 ################################################################################
 
-# This script calculates Average Salary for forecasting in wa_dashboard
-
-# Parent script is updateForecastApps.sh
-# SQL file is forecastAvgSal.sql 
-# Outputs forecastAvgSal.csv for globalPreProcess.R
+# This script calculates Average Salary for forecasting
 
 ################################################################################
 

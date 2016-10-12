@@ -2,11 +2,7 @@
 
 ################################################################################
 
-# This script extracts APS Tenure from dwh for forecasting in wa_dashboard
-
-# Parent script is updateForecastApps.sh
-# SQL file is forecastApsTnr.sql
-# Outputs forecastApsTnr.csv for globalPreProcess.R
+# This script extracts APS Tenure from dwh for forecasting
 
 ################################################################################
 

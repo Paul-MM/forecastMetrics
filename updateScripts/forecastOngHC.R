@@ -2,11 +2,7 @@
 
 ################################################################################
 
-# This script extracts Ongoing HC forecasting in wa_dashboard
-
-# Parent script is updateForecastApps.sh
-# SQL file is forecastOngHC.sql 
-# Outputs forecastOngHC.csv for globalPreProcess.R
+# This script extracts Ongoing HC from dwh for forecasting
 
 ################################################################################
 
