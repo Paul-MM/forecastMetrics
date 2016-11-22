@@ -1,5 +1,10 @@
 shinyServer(function(input, output, session) {
   
+  
+output$test <- renderUI({
+  input$sel_hrTS
+})
+  
 # Switch data based on ui selection
 datasetForeCInput <- reactive({
   switch(input$sel_hrTS, 
@@ -33,7 +38,9 @@ output$forecastPlot <- renderPlotly({
   #plot
   gg <- HWplot(datasetForeCInput(), n.ahead = period, error.ribbon = "red") + 
         scale_x_date(breaks = scales::date_breaks("year")) + # change gridbreaks to yrs
-        ylab(input$sel_hrTS) +
+        ylab("") + # remove y labels as they infringe on axis ticks
+        xlab("") + # remove x label as it's self explanatory
+        ggtitle(input$sel_hrTS) +
         scale_colour_brewer("Legend", palette = "Set1") +
         theme(axis.title.y=element_text(vjust=2)) +
         theme(axis.title.x=element_text(vjust=-0.5))
@@ -43,8 +50,8 @@ output$forecastPlot <- renderPlotly({
   p <- plotly_build(gg)
   p$data[[1]]$hoverinfo <- "none"     # hover options for 'average'
   p$data[[3]]$name <- "Forecast"      # change 'Fitted' to 'Forecast'
-  p$layout[["xaxis"]]$type <- "date"  # enable date handling
-  p$config <- list(displayModeBar = F, showLink = F) #rm ext links
+  p$layout$xaxis$type <- "date"       # enable date handling
+  p$layout$margin$l <- 50             # increase left margin to display larger y axis values
     
   incProgress(0.2)                    # increment progress
     

@@ -33,6 +33,7 @@ shinyUI(
     
     mainPanel(
       plotlyOutput('forecastPlot')
+      , br()
       , downloadButton('downloadData', 'Download Data', class = 'btn-primary')
       , br(), br()
       , dataTableOutput(outputId="tsTable")
