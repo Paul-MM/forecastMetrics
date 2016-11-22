@@ -65,6 +65,13 @@ ts_totHC <- ts(ts_totHC$Headcount, start = c(2007, 7), frequency = 12)
 
 #__________________________________________________________________________________________________#
 
+
+# Total fte
+ts_totFTE <- read_csv("data/ts_totFTE.csv")
+ts_totFTE <- ts(ts_totFTE$Paid_FTE, start = c(2014, 3), frequency = 12) 
+
+#__________________________________________________________________________________________________#
+
 # Attrition 
 ts_attr <- read_csv("data/ts_attr.csv")
 ts_attr <- ts(ts_attr$R12_Attrition_Rate, start = c(2008, 7), frequency = 12)

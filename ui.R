@@ -17,6 +17,7 @@ shinyUI(
                                          "Non-Ongoing Workforce (HC)",
                                          "Casual Workforce (HC)",
                                          "Total Employed Workforce (HC)",
+                                         "Total Employed Workforce (Paid FTE)",
                                          "Overall Ongoing Separation Rate (%)",
                                          "Natural Attrition Separation Rate (%)",
                                          "Redundancy Separation Rate (%)",
