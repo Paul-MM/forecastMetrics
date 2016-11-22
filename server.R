@@ -8,6 +8,7 @@ datasetForeCInput <- reactive({
          "Ongoing Workforce (HC)" = ts_ongHC,
          "Non-Ongoing Workforce (HC)" = ts_nonHC, 
          "Casual Workforce (HC)" = ts_casHC,
+         "Total Employed Workforce (HC)" = ts_totHC,
          "Overall Ongoing Separation Rate (%)" = ts_ong,
          "Natural Attrition Separation Rate (%)" = ts_attr,
          "Redundancy Separation Rate (%)" = ts_rdncy,

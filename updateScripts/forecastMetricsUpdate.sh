@@ -14,11 +14,4 @@ do
   echo running "$script"
 done
 
-# #echo $'\n'This process outputs ATOGapminder.html for Workforce Motion chart...
-# 
-# # generate the motionchart
-# #Rscript ATOGapminder.R
-# 
-# #_____________________________________________________________________________
-
 echo $'\n'FORECAST DATA UPDATE COMPLETE
