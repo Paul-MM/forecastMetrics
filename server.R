@@ -1,10 +1,5 @@
 shinyServer(function(input, output, session) {
   
-  
-output$test <- renderUI({
-  input$sel_hrTS
-})
-  
 # Switch data based on ui selection
 datasetForeCInput <- reactive({
   switch(input$sel_hrTS, 
@@ -14,6 +9,9 @@ datasetForeCInput <- reactive({
          "Non-Ongoing Workforce (HC)" = ts_nonHC, 
          "Casual Workforce (HC)" = ts_casHC,
          "Total Employed Workforce (HC)" = ts_totHC,
+         "Ongoing Workforce (Paid FTE)" = ts_ongFTE,
+         "Non-Ongoing Workforce (Paid FTE)" = ts_nonFTE,
+         "Casual Workforce (Paid FTE)" = ts_casFTE,
          "Total Employed Workforce (Paid FTE)" = ts_totFTE,
          "Overall Ongoing Separation Rate (%)" = ts_ong,
          "Natural Attrition Separation Rate (%)" = ts_attr,

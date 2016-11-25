@@ -65,6 +65,23 @@ ts_totHC <- ts(ts_totHC$Headcount, start = c(2007, 7), frequency = 12)
 
 #__________________________________________________________________________________________________#
 
+# Ongoing fte
+ts_ongFTE <- read_csv("data/ts_ongFTE.csv")
+ts_ongFTE <- ts(ts_ongFTE$Paid_FTE, start = c(2014, 3), frequency = 12) 
+
+#__________________________________________________________________________________________________#
+
+# Non-ongoing fte
+ts_nonFTE <- read_csv("data/ts_nonFTE.csv")
+ts_nonFTE <- ts(ts_nonFTE$Paid_FTE, start = c(2014, 3), frequency = 12) 
+
+#__________________________________________________________________________________________________#
+
+# Casual fte
+ts_casFTE <- read_csv("data/ts_casFTE.csv")
+ts_casFTE <- ts(ts_casFTE$Paid_FTE, start = c(2014, 3), frequency = 12) 
+
+#__________________________________________________________________________________________________#
 
 # Total fte
 ts_totFTE <- read_csv("data/ts_totFTE.csv")
