@@ -1,7 +1,4 @@
 SEL A.snpsht_dt
-,CAST(a.UPL AS DECIMAL(14,2)) AS UPL
-,A.FTE
-,A.UPL_RATE
 ,A.R12
 FROM
 (

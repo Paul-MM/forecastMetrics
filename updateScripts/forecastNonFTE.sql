@@ -1,6 +1,6 @@
 Select
 Snpsht_dt 
-, SUM(Pd_Full_Tm_Eqvlnt_Pct) As Paid_FTE
+, SUM(Pd_Full_Tm_Eqvlnt_Pct) As Measure
 From epgnrldmv.fact_sap_snpsht_dmgs
 Where Emple_Grp_Prmncy_Sts_Nm = 'Non-Ongoing'
 AND Snpsht_dt > '2014-02-28'
