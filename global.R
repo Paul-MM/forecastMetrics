@@ -128,3 +128,21 @@ ts_apsTnr <- ts(ts_apsTnr$Measure, start = c(2007, 7), frequency = 12)
 # Average salary 
 ts_avgSal <- read_csv("data/ts_avgSal.csv")
 ts_avgSal <- ts(ts_avgSal$`Female %`, start = c(2007, 7), frequency = 12) 
+
+#__________________________________________________________________________________________________#
+
+# NESB
+ts_nesb <- read_csv("data/ts_nesb.csv")
+ts_nesb <- ts(ts_nesb$NESB_Rate, start = c(2013, 7), frequency = 12)
+
+#__________________________________________________________________________________________________#
+
+# Indigenous
+ts_indg <- read_csv("data/ts_indg.csv")
+ts_indg <- ts(ts_indg$Indg_Rate, start = c(2013, 7), frequency = 12)
+
+#__________________________________________________________________________________________________#
+
+# Disability
+ts_dsbl <- read_csv("data/ts_dsbl.csv")
+ts_dsbl <- ts(ts_dsbl$Dsbl_Rate, start = c(2013, 7), frequency = 12)

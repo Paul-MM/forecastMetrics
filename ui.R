@@ -27,6 +27,9 @@ shinyUI(
                                          "Average Age (Years)",
                                          "Average ATO Tenure (Years)",
                                          "Average APS Tenure (Years)",
+                                         "Diversity - Non-English Speaking Background (%)",
+                                         "Diversity - Indigenous (%)",
+                                         "Diversity - Disability (%)",
                                          "Average Female Salary (% of Average Male Salary)"),
                              selected = "Unplanned Leave (Days per FTE)")
                  , br()
