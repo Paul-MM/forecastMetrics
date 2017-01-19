@@ -1,6 +1,9 @@
 shinyUI(
   fluidPage(
     
+  # Define link for forecasting explanation
+  link <- "https://en.wikipedia.org/wiki/Exponential_smoothing#Triple_exponential_smoothing",
+    
   # CSS style for navbar html - added padding-top:50px; to .h2,h2 to accommodate navbar
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.min.css")),
   
@@ -35,13 +38,15 @@ shinyUI(
                  , br()
                  , sliderInput("fcast_mnths", label = ("Choose number of months to forecast:"),
                                min = 1, max = 12, step = 1, value = 6)
+                 , tags$a(href = link, "Information on Holt-Winters forecasting", target = "_blank")
     ),
     
     mainPanel(
       plotlyOutput('forecastPlot')
       , br()
       , downloadButton('downloadData', 'Download Data', class = 'btn-primary')
-      , br(), br()
+      , br()
+      , br()
       , dataTableOutput(outputId="tsTable")
       
     )
