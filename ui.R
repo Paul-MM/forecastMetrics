@@ -44,7 +44,6 @@ shinyUI(
         
         br(),
         
-        
         sliderInput(inputId = "fcast_mnths"
                     , label = "Choose number of months to forecast:"
                     , min   = 1
