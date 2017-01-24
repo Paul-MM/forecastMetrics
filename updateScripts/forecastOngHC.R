@@ -9,13 +9,19 @@
 suppressMessages(library(atomisc))    # teradataConnect()
 suppressMessages(library(readr))      # fast I/O
 
-# read SQL to extract ongoing HC data
+# Read SQL to extract ongoing HC data
 sql <- paste(read_lines("forecastOngHC.sql"), collapse="\n")
 
 # Submit query to dwh
-suppressMessages(con <- teradataConnect())
-ongHC <-  dbGetQuery(con, sql) 
-x   <- dbDisconnect(con)
+con   <- teradataConnect()
+ongHC <- dbGetQuery(con, sql) 
+x     <- dbDisconnect(con)
 
-# print output
+# Process for time series
+ongHC$date2 <- as.Date(ongHC$Snpsht_Dt) #format date
+include     <- c("Measure", "date2")
+ongHC       <- ongHC[,names(ongHC) %in% include]
+ongHC       <- ongHC[with(ongHC, order(ongHC$date2)),]
+
+# Print output
 cat(format_csv(ongHC))

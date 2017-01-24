@@ -8,24 +8,27 @@
 
 suppressMessages(library(atomisc))    # teradataConnect()
 suppressMessages(library(tidyr))      # spread()
+suppressMessages(library(dplyr))      # data wrangling
 suppressMessages(library(readr))      # fast I/O
 
-# read avg sal calcs 
+# Read sql
 sql <- paste(read_lines("forecastAvgSal.sql"), collapse="\n")
 
 # submit query to dwh
-suppressMessages(con <- teradataConnect())
+con    <- teradataConnect()
 salary <- dbGetQuery(con, sql) 
 x      <- dbDisconnect(con)
 
-# data wrangling for avg. salary with part time $$
-avgSal          <- subset(salary, salary$Sex_Dcd != 'unknown')
-avgSal          <- spread(avgSal, key = Sex_Dcd, value = Slry_Amt)
-avgSal[,4]      <- (avgSal$Female / avgSal$Male) * 100
-colnames(avgSal)<- c("Snpsht_Dt", 
-                     "Avg. Female Salary",
-                     "Avg. Male Salary",
-                     "Female %")
+# Data wrangling for avg. salary 
+salary %>% 
+  filter(Sex_Dcd != "unknown") %>% 
+  spread(key = Sex_Dcd, value = Slry_Amt) %>% 
+  mutate(Slry_Pct = (Female / Male) * 100) %>% 
+  select(Snpsht_Dt
+         , `Avg. Female Salary` = Female
+         , `Avg. Male Salary`   = Male
+         , Measure              = Slry_Pct) ->
+avgSal
 
 # print output
 cat(format_csv(avgSal))

@@ -9,13 +9,19 @@
 suppressMessages(library(atomisc))    # teradataConnect()
 suppressMessages(library(readr))      # fast I/O
 
-# read SQL to extract casual HC data
+# Read SQL to extract casual HC data
 sql <- paste(read_lines("forecastTotFTE.sql"), collapse="\n")
 
 # Submit query to dwh
-suppressMessages(con <- teradataConnect())
-totFTE <-  dbGetQuery(con, sql) 
-x   <- dbDisconnect(con)
+con    <- teradataConnect()
+totFTE <- dbGetQuery(con, sql) 
+x      <- dbDisconnect(con)
 
-# print output
+# Process data for time series
+totFTE$date2 <- as.Date(totFTE$Snpsht_Dt) #format date
+include      <- c("Measure", "date2")
+totFTE       <- totFTE[,names(totFTE) %in% include]
+totFTE       <- totFTE[with(totFTE, order(totFTE$date2)),]
+
+# Print output
 cat(format_csv(totFTE))

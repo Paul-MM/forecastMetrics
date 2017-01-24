@@ -2,7 +2,7 @@
 
 ################################################################################
 
-# This script calculates diversity rates for forecasting
+# This script calculates nesb rates for forecasting
 
 ################################################################################
 
@@ -42,22 +42,14 @@ dmgs$HC_Mth <- as.Date(dmgs$HC_Mth)
 # Calculate diversity rates
 df %>% 
   mutate(Snpsht_Date = as.Date(Snpsht_Date)
-         , NESB_Sum = nesb.flag(x)) %>% 
+         , NESB_Sum  = nesb.flag(x)) %>% 
   select(Snpsht_Date
-         , NESB_Sum
-         , Indigenous
-         , Disability) %>% 
+         , NESB_Sum) %>% 
   group_by(Snpsht_Date) %>% 
-  summarise(NESB_HC   = sum(NESB_Sum)
-            , Indg_HC = sum(Indigenous)
-            , Dsbl_HC = sum(Disability)) %>%
+  summarise(NESB_HC = sum(NESB_Sum)) %>%
   left_join(dmgs, by = c("Snpsht_Date" = "HC_Mth")) %>% 
-  mutate(NESB_Rate   = round((NESB_HC / HC) * 100, 2)
-         , Indg_Rate = round((Indg_HC / HC) * 100, 2)
-         , Dsbl_Rate = round((Dsbl_HC / HC) * 100, 2)) ->
-rates
+  mutate(Measure = round((NESB_HC / HC) * 100, 2)) ->
+nesb
 
 # print final data
-cat(format_csv(rates))
-
-
+cat(format_csv(nesb))
