@@ -31,7 +31,7 @@ shinyUI(
                                    , "Casual Workforce (Paid FTE)"
                                    , "Total Employed Workforce (Paid FTE)"
                                    , "Overall Ongoing Separation Rate (%)"
-                                   , "Natural Attrition Separation Rate (%)"
+                                   , "Natural Attrition Separation Rate (%)"  
                                    , "Redundancy Separation Rate (%)"
                                    , "Average Age (Years)"
                                    , "Average ATO Tenure (Years)"
@@ -39,9 +39,8 @@ shinyUI(
                                    , "Diversity - Non-English Speaking Background (%)"
                                    , "Diversity - Indigenous (%)"
                                    , "Diversity - Disability (%)"
-                                   , "Average Female Salary (% of Average Male Salary)"),
-                       selected = "Unplanned Leave (Days per FTE)"),
-        
+                                   , "Average Female Salary (% of Average Male Salary)")
+                    , selected = "Unplanned Leave (Days per FTE)"),
         br(),
         
         sliderInput(inputId = "fcast_mnths"

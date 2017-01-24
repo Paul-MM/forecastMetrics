@@ -41,7 +41,7 @@ shinyServer(function(input, output, session) {
     hw_object     <- HoltWinters(datasetForeCInput())
     forecast      <- predict(object = hw_object, n.ahead = period, prediction.interval = TRUE,
                              level = 0.95)
-    for_values    <- data.frame(time = round(x = time(forecast), digits = 3),
+    for_values    <- data.frame(time = round(x = time(forecast), digits = 3), 
                                 value_forecast = as.data.frame(forecast)$fit, 
                                 dev = as.data.frame(forecast)$upr-as.data.frame(forecast)$fit)
     fitted_values <- data.frame(time = round(x = time(hw_object$fitted), digits = 3), 
