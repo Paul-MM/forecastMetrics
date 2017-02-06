@@ -9,26 +9,29 @@ source("data/HWplot.R")                   # ggplot Holt Winters function
 
 # LOAD DATA ----------------------------------------------------------------------------------------
 
-ts_upl    <- read_csv("data/forecastUPL.csv")
-ts_pl     <- read_csv("data/forecastPL.csv")
-ts_ongHC  <- read_csv("data/forecastOngHC.csv")
-ts_nonHC  <- read_csv("data/forecastNonHC.csv")
-ts_casHC  <- read_csv("data/forecastCasHC.csv")
-ts_totHC  <- read_csv("data/forecastTotHC.csv")
-ts_ongFTE <- read_csv("data/forecastOngFTE.csv")
-ts_nonFTE <- read_csv("data/forecastNonFTE.csv")
-ts_casFTE <- read_csv("data/forecastCasFTE.csv")
-ts_totFTE <- read_csv("data/forecastTotFTE.csv")
-ts_attr   <- read_csv("data/forecastAttr.csv")
-ts_rdncy  <- read_csv("data/forecastRdncy.csv")
-ts_sepn   <- read_csv("data/forecastSepn.csv")
-ts_age    <- read_csv("data/forecastAge.csv")
-ts_atoTnr <- read_csv("data/forecastAtoTnr.csv")
-ts_apsTnr <- read_csv("data/forecastApsTnr.csv")
-ts_avgSal <- read_csv("data/forecastAvgSal.csv")
-ts_nesb   <- read_csv("data/forecastNESB.csv")
-ts_indg   <- read_csv("data/forecastIndg.csv")
-ts_dsbl   <- read_csv("data/forecastDsbl.csv")
+# Set path for data files
+dataPath <- "/proj/workforce/data/shinyApps/"
+
+ts_upl    <- read_csv(paste0(dataPath,"forecastMetrics/forecastUPL.csv"))
+ts_pl     <- read_csv(paste0(dataPath,"forecastMetrics/forecastPL.csv"))
+ts_ongHC  <- read_csv(paste0(dataPath,"forecastMetrics/forecastOngHC.csv"))
+ts_nonHC  <- read_csv(paste0(dataPath,"forecastMetrics/forecastNonHC.csv"))
+ts_casHC  <- read_csv(paste0(dataPath,"forecastMetrics/forecastCasHC.csv"))
+ts_totHC  <- read_csv(paste0(dataPath,"forecastMetrics/forecastTotHC.csv"))
+ts_ongFTE <- read_csv(paste0(dataPath,"forecastMetrics/forecastOngFTE.csv"))
+ts_nonFTE <- read_csv(paste0(dataPath,"forecastMetrics/forecastNonFTE.csv"))
+ts_casFTE <- read_csv(paste0(dataPath,"forecastMetrics/forecastCasFTE.csv"))
+ts_totFTE <- read_csv(paste0(dataPath,"forecastMetrics/forecastTotFTE.csv"))
+ts_attr   <- read_csv(paste0(dataPath,"forecastMetrics/forecastAttr.csv"))
+ts_rdncy  <- read_csv(paste0(dataPath,"forecastMetrics/forecastRdncy.csv"))
+ts_sepn   <- read_csv(paste0(dataPath,"forecastMetrics/forecastSepn.csv"))
+ts_age    <- read_csv(paste0(dataPath,"forecastMetrics/forecastAge.csv"))
+ts_atoTnr <- read_csv(paste0(dataPath,"forecastMetrics/forecastAtoTnr.csv"))
+ts_apsTnr <- read_csv(paste0(dataPath,"forecastMetrics/forecastApsTnr.csv"))
+ts_avgSal <- read_csv(paste0(dataPath,"forecastMetrics/forecastAvgSal.csv"))
+ts_nesb   <- read_csv(paste0(dataPath,"forecastMetrics/forecastNESB.csv"))
+ts_indg   <- read_csv(paste0(dataPath,"forecastMetrics/forecastIndg.csv"))
+ts_dsbl   <- read_csv(paste0(dataPath,"forecastMetrics/forecastDsbl.csv"))
 
 # TS OBJECTS ---------------------------------------------------------------------------------------
 

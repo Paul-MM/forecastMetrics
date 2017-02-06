@@ -16,7 +16,7 @@ shinyServer(function(input, output, session) {
            , "Non-Ongoing Workforce (Paid FTE)"                 = ts_nonFTE
            , "Casual Workforce (Paid FTE)"                      = ts_casFTE
            , "Total Employed Workforce (Paid FTE)"              = ts_totFTE
-           , "Overall Ongoing Separation Rate (%)"              = ts_ong
+           # , "Overall Ongoing Separation Rate (%)"              = ts_ong   ## This file doesn't exist in the datasets
            , "Natural Attrition Separation Rate (%)"            = ts_attr
            , "Redundancy Separation Rate (%)"                   = ts_rdncy
            , "Average Age (Years)"                              = ts_age 
