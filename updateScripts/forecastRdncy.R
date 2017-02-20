@@ -26,7 +26,7 @@ headcounts  <- dbGetQuery(con, sql1)
 separations <- dbGetQuery(con, sql2) 
 x           <- dbDisconnect(con)
 
-# Calculate attrition rate
+# Calculate rate
 separations %>% 
   spread(key     = Sepn_Reason
          , value = HC) %>% 

@@ -30,7 +30,7 @@ shinyUI(
                                    , "Non-Ongoing Workforce (Paid FTE)"
                                    , "Casual Workforce (Paid FTE)"
                                    , "Total Employed Workforce (Paid FTE)"
-                                   # , "Overall Ongoing Separation Rate (%)"   ## This file doesn't exist in the datasets
+                                   , "Overall Ongoing Separation Rate (%)"   
                                    , "Natural Attrition Separation Rate (%)"  
                                    , "Redundancy Separation Rate (%)"
                                    , "Average Age (Years)"
