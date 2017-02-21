@@ -2,20 +2,13 @@
 
 ################################################################################
 
-# This script calculates nesb rates for forecasting
+# This script calculates indigenous rates for forecasting
 
 ################################################################################
 
 suppressMessages(library(atomisc))  # teradataConnect()
 suppressMessages(library(dplyr))    # data wrangling
 suppressMessages(library(readr))    # fast I/O
-
-# FUNCTION -----------------------------------------------------------------------------------------
-
-nesb.flag <- function(x){
-  # Assigns row with NESB of 1 when any of the three NESB columns is flagged
-  ifelse(df$NESB == 1 | df$NESB1 == 1 | df$NESB2 == 1, 1, 0)
-}
 
 # EXTRACT DATA -------------------------------------------------------------------------------------
 
@@ -39,17 +32,16 @@ df <- data.frame(lapply(df, function(x) ifelse(is.na(x), 0, x)))
 # Formate date for join in headcounts dataframe
 dmgs$HC_Mth <- as.Date(dmgs$HC_Mth)
 
-# Calculate diversity rates
+# Calculate disability rates
 df %>% 
-  mutate(Snpsht_Dt = as.Date(Snpsht_Dt)
-         , NESB_Sum  = nesb.flag(x)) %>% 
   select(Snpsht_Dt
-         , NESB_Sum) %>% 
+         , Indigenous) %>% 
+  mutate(Snpsht_Dt = as.Date(Snpsht_Dt)) %>% 
   group_by(Snpsht_Dt) %>% 
-  summarise(NESB_HC = sum(NESB_Sum)) %>%
+  summarise(Indg_HC = sum(Indigenous)) %>%
   left_join(dmgs, by = c("Snpsht_Dt" = "HC_Mth")) %>% 
-  mutate(Measure = round((NESB_HC / HC) * 100, 2)) ->
-nesb
+  mutate(Measure = round((Indg_HC / HC) * 100, 2)) ->
+indg
 
-# print final data
-cat(format_csv(nesb))
+# Print final data
+cat(format_csv(indg))

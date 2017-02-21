@@ -34,12 +34,12 @@ dmgs$HC_Mth <- as.Date(dmgs$HC_Mth)
 
 # Calculate disability rates
 df %>% 
-  select(Snpsht_Date
+  select(Snpsht_Dt
          , Disability) %>% 
-  mutate(Snpsht_Date = as.Date(Snpsht_Date)) %>% 
-  group_by(Snpsht_Date) %>% 
+  mutate(Snpsht_Dt = as.Date(Snpsht_Dt)) %>% 
+  group_by(Snpsht_Dt) %>% 
   summarise(Dsbl_HC = sum(Disability)) %>%
-  left_join(dmgs, by = c("Snpsht_Date" = "HC_Mth")) %>% 
+  left_join(dmgs, by = c("Snpsht_Dt" = "HC_Mth")) %>% 
   mutate(Measure = round((Dsbl_HC / HC) * 100, 2)) ->
 dsbl
 
