@@ -1,4 +1,4 @@
-shinyUI(
+shinyUI(function(request){
   
   fluidPage(
     
@@ -63,10 +63,14 @@ shinyUI(
                        , class  = 'btn-primary'),
         br(),
         br(),
+        bookmarkButton(class = 'btn-primary'
+                       , label = "Bookmark"),
+        br(),
+        br(),
         dataTableOutput(outputId = "tsTable")
         
       )
     
     )
   )
-)
+})

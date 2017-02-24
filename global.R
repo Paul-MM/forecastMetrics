@@ -70,3 +70,6 @@ ts_avgSal <- ts(data = ts_avgSal$Measure, start = c(2007, 7), frequency = 12)
 ts_nesb   <- ts(data = ts_nesb$Measure,   start = c(2013, 7), frequency = 12)
 ts_indg   <- ts(data = ts_indg$Measure,   start = c(2013, 7), frequency = 12)
 ts_dsbl   <- ts(data = ts_dsbl$Measure,   start = c(2013, 7), frequency = 12)
+
+#Enable bookmarking for this app
+enableBookmarking(store = "url")
