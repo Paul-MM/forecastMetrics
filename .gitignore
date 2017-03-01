@@ -5,3 +5,5 @@
 readme.html
 README.html
 *~
+.Rproj.user
+packrat/lib*/

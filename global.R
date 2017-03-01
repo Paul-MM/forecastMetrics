@@ -1,4 +1,4 @@
-suppressMessages(library(shiny))          # web framework
+suppressMessages(library(shiny))          # web framewor
 suppressMessages(library(lubridate))      # data handling
 suppressMessages(library(plotly))         # interactive plots
 suppressMessages(library(readr))          # fast I/O
