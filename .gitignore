@@ -2,3 +2,6 @@
 *.json
 *.txt
 *.Rhistory
+readme.html
+README.html
+*~
