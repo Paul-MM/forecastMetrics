@@ -37,8 +37,11 @@ shinyUI(function(request){
                                    , "Average ATO Tenure (Years)"
                                    , "Average APS Tenure (Years)"
                                    , "Diversity - Non-English Speaking Background (%)"
+                                   , "Diversity - Non-English Speaking Background Ongoing (%)"
                                    , "Diversity - Indigenous (%)"
+                                   , "Diversity - Indigenous Ongoing (%)"
                                    , "Diversity - Disability (%)"
+                                   , "Diversity - Disability Ongoing (%)"
                                    , "Average Female Salary (% of Average Male Salary)")
                     , selected = "Unplanned Leave (Days per FTE)"),
         br(),

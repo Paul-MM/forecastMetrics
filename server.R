@@ -23,8 +23,11 @@ shinyServer(function(input, output, session) {
            , "Average ATO Tenure (Years)"                       = ts_atoTnr
            , "Average APS Tenure (Years)"                       = ts_apsTnr
            , "Diversity - Non-English Speaking Background (%)"  = ts_nesb
+           , "Diversity - Non-English Speaking Background Ongoing (%)"  = ts_ongNesb
            , "Diversity - Indigenous (%)"                       = ts_indg
+           , "Diversity - Indigenous Ongoing (%)"               = ts_ongIndg
            , "Diversity - Disability (%)"                       = ts_dsbl
+           , "Diversity - Disability Ongoing (%)"               = ts_ongDsbl
            , "Average Female Salary (% of Average Male Salary)" = ts_avgSal)
     
   })
