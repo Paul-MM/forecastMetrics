@@ -5,7 +5,12 @@ shinyServer(function(input, output, session) {
   # Switch data based on ui selection
   datasetForeCInput <- reactive({
     
-    if (input$sel_hrTS == "Workforce (HC)"){
+    if (input$sel_hrTS == "Leave (Days per FTE)"){
+      switch(EXPR                   = input$sel_leaveType
+             , "Unplanned Leave"    = ts_upl
+             , "Planned Leave"      = ts_pl)
+    }
+    else if (input$sel_hrTS == "Workforce (HC)"){
       switch(EXPR                   = input$sel_employType
              , "Ongoing"            = ts_ongHC
              , "Non-Ongoing"        = ts_nonHC
@@ -18,6 +23,12 @@ shinyServer(function(input, output, session) {
              , "Non-Ongoing"        = ts_nonFTE
              , "Casual"             = ts_casFTE
              , "Total"              = ts_totFTE)
+    }
+    else if (input$sel_hrTS == "Separation Rate (%)"){
+      switch(EXPR                   = input$sel_sepType
+             , "Overall Ongoing"    = ts_sepn
+             , "Natural Attrition"  = ts_attr
+             , "Redundancy"         = ts_rdncy)
     }
     else if (input$sel_hrTS == "Average Tenure (Years)"){
       switch(EXPR                   = input$sel_agency
@@ -40,11 +51,6 @@ shinyServer(function(input, output, session) {
     }
     else {
       switch(EXPR                                                 = input$sel_hrTS
-             , "Unplanned Leave (Days per FTE)"                   = ts_upl 
-             , "Planned Leave (Days per FTE)"                     = ts_pl
-             , "Overall Ongoing Separation Rate (%)"              = ts_sepn   
-             , "Natural Attrition Separation Rate (%)"            = ts_attr
-             , "Redundancy Separation Rate (%)"                   = ts_rdncy
              , "Average Age (Years)"                              = ts_age 
              , "Average Female Salary (% of Average Male Salary)" = ts_avgSal)
     }
@@ -105,6 +111,31 @@ shinyServer(function(input, output, session) {
     # Define forecast period
     period <- input$fcast_mnths
     
+    # Plot Title
+    ttl <- ({
+      if (input$sel_hrTS == "Leave (Days per FTE)"){
+        plot_title <- paste(input$sel_leaveType, "(Days per FTE)")
+      }
+      else if (input$sel_hrTS == "Workforce (HC)"){
+        plot_title <- paste(input$sel_hrTS, "-", input$sel_employType)
+      }
+      else if (input$sel_hrTS == "Workforce (Paid FTE)"){
+        plot_title <- paste(input$sel_hrTS, "-", input$sel_employType)
+      }
+      else if (input$sel_hrTS == "Separation Rate (%)"){
+        plot_title <- paste(input$sel_hrTS, "-", input$sel_sepType)
+      }
+      else if (input$sel_hrTS == "Average Tenure (Years)"){
+        plot_title <- paste(input$sel_hrTS, "-", input$sel_agency)
+      }
+      else if (input$sel_hrTS == "Diversity (%)"){
+        plot_title <- paste(input$sel_hrTS, "-", input$sel_grp, "-", input$sel_employType2)
+      }
+      else plot_title <- input$sel_hrTS
+      
+      plot_title
+    })
+    
     # Initialise progress bar
     withProgress(message = 'Making plot...', value = 0.2, {
       
@@ -113,7 +144,7 @@ shinyServer(function(input, output, session) {
             scale_x_date(breaks = scales::date_breaks("year")) + # change gridbreaks to yrs
             ylab("") + # remove y labels as they infringe on axis ticks
             xlab("") + # remove x label as it's self explanatory
-            ggtitle(input$sel_hrTS) +
+            ggtitle(ttl) +
             scale_colour_brewer("Legend", palette = "Set1") +
             theme(axis.title.y = element_text(vjust = 2)) +
             theme(axis.title.x = element_text(vjust = -0.5))

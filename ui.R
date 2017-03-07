@@ -20,18 +20,22 @@ shinyUI(function(request){
         
         selectInput(inputId    = "sel_hrTS"
                     , label    = "Choose HR metric to forecast:"
-                    , choices  = c("Unplanned Leave (Days per FTE)"
-                                   , "Planned Leave (Days per FTE)"
+                    , choices  = c("Leave (Days per FTE)"
                                    , "Workforce (HC)"
                                    , "Workforce (Paid FTE)"
-                                   , "Overall Ongoing Separation Rate (%)"   
-                                   , "Natural Attrition Separation Rate (%)"  
-                                   , "Redundancy Separation Rate (%)"
+                                   , "Separation Rate (%)"
                                    , "Average Age (Years)"
                                    , "Average Tenure (Years)"
                                    , "Diversity (%)"
                                    , "Average Female Salary (% of Average Male Salary)")
                     , selected = "Unplanned Leave (Days per FTE)"),
+        
+        # Leave
+        conditionalPanel(condition = "input.sel_hrTS == 'Leave (Days per FTE)'",
+                         radioButtons("sel_leaveType"
+                                      , "Select Leave Type:"
+                                      , choices = c("Unplanned Leave", "Planned Leave")
+                                      , selected = "Unplanned Leave")),
         
         # Workforce HeaCount and Paid FTE
         conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)' || input.sel_hrTS == 'Workforce (Paid FTE)'",
@@ -40,6 +44,14 @@ shinyUI(function(request){
                                       , choices = c("Ongoing", "Non-Ongoing"
                                                     , "Casual", "Total")
                                       , selected = "Ongoing")),
+        
+        # Separation Rate
+        conditionalPanel(condition = "input.sel_hrTS == 'Separation Rate (%)'",
+                         radioButtons("sel_sepType"
+                                      , "Select Separation Type:"
+                                      , choices = c("Overall Ongoing", "Natural Attrition"
+                                                    , "Redundancy")
+                                      , selected = "Overall Ongoing")),
         
         # Tenure
         conditionalPanel(condition = "input.sel_hrTS == 'Average Tenure (Years)'",
