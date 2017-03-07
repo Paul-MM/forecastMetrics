@@ -22,28 +22,60 @@ shinyUI(function(request){
                     , label    = "Choose HR metric to forecast:"
                     , choices  = c("Unplanned Leave (Days per FTE)"
                                    , "Planned Leave (Days per FTE)"
-                                   , "Ongoing Workforce (HC)"
-                                   , "Non-Ongoing Workforce (HC)"
-                                   , "Casual Workforce (HC)"
-                                   , "Total Employed Workforce (HC)"
-                                   , "Ongoing Workforce (Paid FTE)"
-                                   , "Non-Ongoing Workforce (Paid FTE)"
-                                   , "Casual Workforce (Paid FTE)"
-                                   , "Total Employed Workforce (Paid FTE)"
+                                   , "Workforce (HC)"
+                                   # , "Ongoing Workforce (HC)"
+                                   # , "Non-Ongoing Workforce (HC)"
+                                   # , "Casual Workforce (HC)"
+                                   # , "Total Employed Workforce (HC)"
+                                   , "Workforce (Paid FTE)"
+                                   # , "Ongoing Workforce (Paid FTE)"
+                                   # , "Non-Ongoing Workforce (Paid FTE)"
+                                   # , "Casual Workforce (Paid FTE)"
+                                   # , "Total Employed Workforce (Paid FTE)"
                                    , "Overall Ongoing Separation Rate (%)"   
                                    , "Natural Attrition Separation Rate (%)"  
                                    , "Redundancy Separation Rate (%)"
                                    , "Average Age (Years)"
-                                   , "Average ATO Tenure (Years)"
-                                   , "Average APS Tenure (Years)"
-                                   , "Diversity - Non-English Speaking Background (%)"
-                                   , "Diversity - Non-English Speaking Background Ongoing (%)"
-                                   , "Diversity - Indigenous (%)"
-                                   , "Diversity - Indigenous Ongoing (%)"
-                                   , "Diversity - Disability (%)"
-                                   , "Diversity - Disability Ongoing (%)"
+                                   , "Average Tenure (Years)"
+                                   # , "Average ATO Tenure (Years)"
+                                   # , "Average APS Tenure (Years)"
+                                   , "Diversity (%)"
+                                   # , "Diversity - Non-English Speaking Background (%)"
+                                   # , "Diversity - Non-English Speaking Background Ongoing (%)"
+                                   # , "Diversity - Indigenous (%)"
+                                   # , "Diversity - Indigenous Ongoing (%)"
+                                   # , "Diversity - Disability (%)"
+                                   # , "Diversity - Disability Ongoing (%)"
                                    , "Average Female Salary (% of Average Male Salary)")
                     , selected = "Unplanned Leave (Days per FTE)"),
+        
+        # HeaCount and Paid FTE
+        conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)' || input.sel_hrTS == 'Workforce (Paid FTE)'",
+                         radioButtons("sel_employType"
+                                      , "Select Employment Type:"
+                                      , choices = c("Ongoing", "Non-Ongoing"
+                                                    , "Casual", "Total")
+                                      , selected = "Ongoing")),
+        
+        # Tenure
+        conditionalPanel(condition = "input.sel_hrTS == 'Average Tenure (Years)'",
+                         radioButtons("sel_agency"
+                                      , "Select Agency:"
+                                      , choices = c("ATO", "APS")
+                                      , selected = "ATO")),
+
+        # Diversity        
+        conditionalPanel(condition = "input.sel_hrTS == 'Diversity (%)'",
+                         radioButtons("sel_grp"
+                                      , "Select Group:"
+                                      , choices = c("Non-English Speaking Background"
+                                                    , "Indigenous", "Disability")
+                                      , selected = "Non-English Speaking Background"),
+                         radioButtons("sel_employType2"
+                                      , "Select Employment Type:"
+                                      , choices = c("Ongoing", "Total")
+                                      , selected = "Ongoing")),
+        
         br(),
         
         sliderInput(inputId = "fcast_mnths"

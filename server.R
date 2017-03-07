@@ -5,30 +5,67 @@ shinyServer(function(input, output, session) {
   # Switch data based on ui selection
   datasetForeCInput <- reactive({
     
-    switch(EXPR                                                 = input$sel_hrTS
-           , "Unplanned Leave (Days per FTE)"                   = ts_upl 
-           , "Planned Leave (Days per FTE)"                     = ts_pl
-           , "Ongoing Workforce (HC)"                           = ts_ongHC
-           , "Non-Ongoing Workforce (HC)"                       = ts_nonHC 
-           , "Casual Workforce (HC)"                            = ts_casHC
-           , "Total Employed Workforce (HC)"                    = ts_totHC
-           , "Ongoing Workforce (Paid FTE)"                     = ts_ongFTE
-           , "Non-Ongoing Workforce (Paid FTE)"                 = ts_nonFTE
-           , "Casual Workforce (Paid FTE)"                      = ts_casFTE
-           , "Total Employed Workforce (Paid FTE)"              = ts_totFTE
-           , "Overall Ongoing Separation Rate (%)"              = ts_sepn   
-           , "Natural Attrition Separation Rate (%)"            = ts_attr
-           , "Redundancy Separation Rate (%)"                   = ts_rdncy
-           , "Average Age (Years)"                              = ts_age 
-           , "Average ATO Tenure (Years)"                       = ts_atoTnr
-           , "Average APS Tenure (Years)"                       = ts_apsTnr
-           , "Diversity - Non-English Speaking Background (%)"  = ts_nesb
-           , "Diversity - Non-English Speaking Background Ongoing (%)"  = ts_ongNesb
-           , "Diversity - Indigenous (%)"                       = ts_indg
-           , "Diversity - Indigenous Ongoing (%)"               = ts_ongIndg
-           , "Diversity - Disability (%)"                       = ts_dsbl
-           , "Diversity - Disability Ongoing (%)"               = ts_ongDsbl
-           , "Average Female Salary (% of Average Male Salary)" = ts_avgSal)
+    if (input$sel_hrTS == "Workforce (HC)"){
+      switch(EXPR                   = input$sel_employType
+             , "Ongoing"            = ts_ongHC
+             , "Non-Ongoing"        = ts_nonHC
+             , "Casual"             = ts_casHC
+             , "Total"              = ts_totHC)
+    }
+    else if (input$sel_hrTS == "Workforce (Paid FTE)"){
+      switch(EXPR                   = input$sel_employType
+             , "Ongoing"            = ts_ongFTE
+             , "Non-Ongoing"        = ts_nonFTE
+             , "Casual"             = ts_casFTE
+             , "Total"              = ts_totFTE)
+    }
+    else if (input$sel_hrTS == "Average Tenure (Years)"){
+      switch(EXPR                   = input$sel_agency
+             , "ATO"                = ts_atoTnr
+             , "APS"                = ts_apsTnr)
+    }
+    else if (input$sel_hrTS == "Diversity (%)"){
+      if (input$sel_employType2 == "Total"){
+        switch(EXPR                                               = input$sel_grp
+               , "Non-English Speaking Background"                = ts_nesb
+               , "Indigenous"                                     = ts_indg
+               , "Disability"                                     = ts_dsbl)
+      }
+      else if (input$sel_employType2 == "Ongoing"){
+        switch(EXPR                                               = input$sel_grp
+               , "Non-English Speaking Background"                = ts_ongNesb
+               , "Indigenous"                                     = ts_ongIndg
+               , "Disability"                                     = ts_ongDsbl)
+      }
+    }
+    else {
+      switch(EXPR                                                 = input$sel_hrTS
+             , "Unplanned Leave (Days per FTE)"                   = ts_upl 
+             , "Planned Leave (Days per FTE)"                     = ts_pl
+             # , "Ongoing Workforce (HC)"                           = ts_ongHC
+             # , "Non-Ongoing Workforce (HC)"                       = ts_nonHC 
+             # , "Casual Workforce (HC)"                            = ts_casHC
+             # , "Total Employed Workforce (HC)"                    = ts_totHC
+             # , "Ongoing Workforce (Paid FTE)"                     = ts_ongFTE
+             # , "Non-Ongoing Workforce (Paid FTE)"                 = ts_nonFTE
+             # , "Casual Workforce (Paid FTE)"                      = ts_casFTE
+             # , "Total Employed Workforce (Paid FTE)"              = ts_totFTE
+             , "Overall Ongoing Separation Rate (%)"              = ts_sepn   
+             , "Natural Attrition Separation Rate (%)"            = ts_attr
+             , "Redundancy Separation Rate (%)"                   = ts_rdncy
+             , "Average Age (Years)"                              = ts_age 
+             # , "Average ATO Tenure (Years)"                       = ts_atoTnr
+             # , "Average APS Tenure (Years)"                       = ts_apsTnr
+             # , "Diversity - Non-English Speaking Background (%)"  = ts_nesb
+             # , "Diversity - Non-English Speaking Background Ongoing (%)"  = ts_ongNesb
+             # , "Diversity - Indigenous (%)"                       = ts_indg
+             # , "Diversity - Indigenous Ongoing (%)"               = ts_ongIndg
+             # , "Diversity - Disability (%)"                       = ts_dsbl
+             # , "Diversity - Disability Ongoing (%)"               = ts_ongDsbl
+             , "Average Female Salary (% of Average Male Salary)" = ts_avgSal)
+    }
+    
+    
     
   })
   
