@@ -42,26 +42,10 @@ shinyServer(function(input, output, session) {
       switch(EXPR                                                 = input$sel_hrTS
              , "Unplanned Leave (Days per FTE)"                   = ts_upl 
              , "Planned Leave (Days per FTE)"                     = ts_pl
-             # , "Ongoing Workforce (HC)"                           = ts_ongHC
-             # , "Non-Ongoing Workforce (HC)"                       = ts_nonHC 
-             # , "Casual Workforce (HC)"                            = ts_casHC
-             # , "Total Employed Workforce (HC)"                    = ts_totHC
-             # , "Ongoing Workforce (Paid FTE)"                     = ts_ongFTE
-             # , "Non-Ongoing Workforce (Paid FTE)"                 = ts_nonFTE
-             # , "Casual Workforce (Paid FTE)"                      = ts_casFTE
-             # , "Total Employed Workforce (Paid FTE)"              = ts_totFTE
              , "Overall Ongoing Separation Rate (%)"              = ts_sepn   
              , "Natural Attrition Separation Rate (%)"            = ts_attr
              , "Redundancy Separation Rate (%)"                   = ts_rdncy
              , "Average Age (Years)"                              = ts_age 
-             # , "Average ATO Tenure (Years)"                       = ts_atoTnr
-             # , "Average APS Tenure (Years)"                       = ts_apsTnr
-             # , "Diversity - Non-English Speaking Background (%)"  = ts_nesb
-             # , "Diversity - Non-English Speaking Background Ongoing (%)"  = ts_ongNesb
-             # , "Diversity - Indigenous (%)"                       = ts_indg
-             # , "Diversity - Indigenous Ongoing (%)"               = ts_ongIndg
-             # , "Diversity - Disability (%)"                       = ts_dsbl
-             # , "Diversity - Disability Ongoing (%)"               = ts_ongDsbl
              , "Average Female Salary (% of Average Male Salary)" = ts_avgSal)
     }
     

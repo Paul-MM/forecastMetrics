@@ -23,33 +23,17 @@ shinyUI(function(request){
                     , choices  = c("Unplanned Leave (Days per FTE)"
                                    , "Planned Leave (Days per FTE)"
                                    , "Workforce (HC)"
-                                   # , "Ongoing Workforce (HC)"
-                                   # , "Non-Ongoing Workforce (HC)"
-                                   # , "Casual Workforce (HC)"
-                                   # , "Total Employed Workforce (HC)"
                                    , "Workforce (Paid FTE)"
-                                   # , "Ongoing Workforce (Paid FTE)"
-                                   # , "Non-Ongoing Workforce (Paid FTE)"
-                                   # , "Casual Workforce (Paid FTE)"
-                                   # , "Total Employed Workforce (Paid FTE)"
                                    , "Overall Ongoing Separation Rate (%)"   
                                    , "Natural Attrition Separation Rate (%)"  
                                    , "Redundancy Separation Rate (%)"
                                    , "Average Age (Years)"
                                    , "Average Tenure (Years)"
-                                   # , "Average ATO Tenure (Years)"
-                                   # , "Average APS Tenure (Years)"
                                    , "Diversity (%)"
-                                   # , "Diversity - Non-English Speaking Background (%)"
-                                   # , "Diversity - Non-English Speaking Background Ongoing (%)"
-                                   # , "Diversity - Indigenous (%)"
-                                   # , "Diversity - Indigenous Ongoing (%)"
-                                   # , "Diversity - Disability (%)"
-                                   # , "Diversity - Disability Ongoing (%)"
                                    , "Average Female Salary (% of Average Male Salary)")
                     , selected = "Unplanned Leave (Days per FTE)"),
         
-        # HeaCount and Paid FTE
+        # Workforce HeaCount and Paid FTE
         conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)' || input.sel_hrTS == 'Workforce (Paid FTE)'",
                          radioButtons("sel_employType"
                                       , "Select Employment Type:"
