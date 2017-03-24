@@ -8,7 +8,8 @@ shinyServer(function(input, output, session) {
     if (input$sel_hrTS == "Leave (Days per FTE)"){
       switch(EXPR                   = input$sel_leaveType
              , "Unplanned Leave"    = ts_upl
-             , "Planned Leave"      = ts_pl)
+             , "Planned Leave"      = ts_pl
+             , "Total Leave"        = ts_totLv)
     }
     else if (input$sel_hrTS == "Workforce (HC)"){
       switch(EXPR                   = input$sel_employType

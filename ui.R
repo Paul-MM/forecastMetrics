@@ -34,7 +34,7 @@ shinyUI(function(request){
         conditionalPanel(condition = "input.sel_hrTS == 'Leave (Days per FTE)'",
                          radioButtons("sel_leaveType"
                                       , "Select Leave Type:"
-                                      , choices = c("Unplanned Leave", "Planned Leave")
+                                      , choices = c("Unplanned Leave", "Planned Leave", "Total Leave")
                                       , selected = "Unplanned Leave")),
         
         # Workforce HeaCount and Paid FTE

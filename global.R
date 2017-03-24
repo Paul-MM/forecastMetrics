@@ -13,6 +13,7 @@ dataPath <- "/proj/workforce/data/shinyApps/"
 
 ts_upl     <- read_csv(paste0(dataPath,"forecastMetrics/forecastUPL.csv"))
 ts_pl      <- read_csv(paste0(dataPath,"forecastMetrics/forecastPL.csv"))
+ts_totLv   <- read_csv(paste0(dataPath,"forecastMetrics/forecastTotLv.csv"))
 ts_ongHC   <- read_csv(paste0(dataPath,"forecastMetrics/forecastOngHC.csv"))
 ts_nonHC   <- read_csv(paste0(dataPath,"forecastMetrics/forecastNonHC.csv"))
 ts_casHC   <- read_csv(paste0(dataPath,"forecastMetrics/forecastCasHC.csv"))
@@ -52,6 +53,13 @@ ts_pl_dt    <- as.Date(ts_pl_dt[1,2]) # once back to data.frame can as.Date on t
 ts_strt_mth <- month(ts_pl_dt)
 ts_strt_yr  <- year(ts_pl_dt)
 ts_pl       <- ts(data = ts_pl$R12, start = c(ts_strt_yr, ts_strt_mth), frequency = 12)
+
+# Start date manipulation and time series
+ts_totLv_dt    <- as.data.frame(ts_totLv)   # need to coerce tbl.df back to data.frame
+ts_totLv_dt    <- as.Date(ts_totLv_dt[1,2]) # once back to data.frame can as.Date on ts_pl_dt[1,2]
+ts_strt_mth    <- month(ts_totLv_dt)
+ts_strt_yr     <- year(ts_totLv_dt)
+ts_totLv       <- ts(data = ts_totLv$R12, start = c(ts_strt_yr, ts_strt_mth), frequency = 12)
 
 # Remaining measures ####
 ts_ongHC  <- ts(data = ts_ongHC$Measure,  start = c(2007, 7), frequency = 12) 
