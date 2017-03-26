@@ -25,6 +25,13 @@ shinyServer(function(input, output, session) {
              , "Casual"             = ts_casFTE
              , "Total"              = ts_totFTE)
     }
+    else if (input$sel_hrTS == "Workforce Utilisation (Paid FTE/HC)"){
+      switch(EXPR                   = input$sel_employType
+             , "Ongoing"            = ts_ongUtil
+             , "Non-Ongoing"        = ts_nonUtil
+             , "Casual"             = ts_casUtil
+             , "Total"              = ts_totUtil)
+    }
     else if (input$sel_hrTS == "Separation Rate (%)"){
       switch(EXPR                   = input$sel_sepType
              , "Overall Ongoing"    = ts_sepn
@@ -121,6 +128,9 @@ shinyServer(function(input, output, session) {
         plot_title <- paste(input$sel_hrTS, "-", input$sel_employType)
       }
       else if (input$sel_hrTS == "Workforce (Paid FTE)"){
+        plot_title <- paste(input$sel_hrTS, "-", input$sel_employType)
+      }
+      else if (input$sel_hrTS == "Workforce Utilisation (Paid FTE/HC)"){
         plot_title <- paste(input$sel_hrTS, "-", input$sel_employType)
       }
       else if (input$sel_hrTS == "Separation Rate (%)"){

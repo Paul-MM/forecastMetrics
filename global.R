@@ -36,6 +36,15 @@ ts_ongIndg <- read_csv(paste0(dataPath,"forecastMetrics/forecastIndgOng.csv"))
 ts_dsbl    <- read_csv(paste0(dataPath,"forecastMetrics/forecastDsbl.csv"))
 ts_ongDsbl <- read_csv(paste0(dataPath,"forecastMetrics/forecastDsblOng.csv"))
 
+ts_ongUtil <- subset(ts_ongHC, ts_ongHC$date2 >= "2014-03-31")
+ts_ongUtil$Measure <- ts_ongFTE$Measure/ts_ongUtil$Measure
+ts_nonUtil <- subset(ts_nonHC, ts_ongHC$date2 >= "2014-03-31")
+ts_nonUtil$Measure <- ts_nonFTE$Measure/ts_nonUtil$Measure
+ts_casUtil <- subset(ts_casHC, ts_ongHC$date2 >= "2014-03-31")
+ts_casUtil$Measure <- ts_casFTE$Measure/ts_casUtil$Measure
+ts_totUtil <- subset(ts_totHC, ts_ongHC$date2 >= "2014-03-31")
+ts_totUtil$Measure <- ts_totFTE$Measure/ts_totUtil$Measure
+
 # TS OBJECTS ---------------------------------------------------------------------------------------
 
 # Planned and Unplanned leave ####
@@ -70,6 +79,10 @@ ts_ongFTE <- ts(data = ts_ongFTE$Measure, start = c(2014, 3), frequency = 12)
 ts_nonFTE <- ts(data = ts_nonFTE$Measure, start = c(2014, 3), frequency = 12) 
 ts_casFTE <- ts(data = ts_casFTE$Measure, start = c(2014, 3), frequency = 12) 
 ts_totFTE <- ts(data = ts_totFTE$Measure, start = c(2014, 3), frequency = 12) 
+ts_ongUtil<- ts(data = ts_ongUtil$Measure, start = c(2014, 3), frequency = 12)
+ts_nonUtil<- ts(data = ts_nonUtil$Measure, start = c(2014, 3), frequency = 12)
+ts_casUtil<- ts(data = ts_casUtil$Measure, start = c(2014, 3), frequency = 12)
+ts_totUtil<- ts(data = ts_totUtil$Measure, start = c(2014, 3), frequency = 12)
 ts_attr   <- ts(data = ts_attr$Measure,   start = c(2008, 7), frequency = 12)
 ts_rdncy  <- ts(data = ts_rdncy$Measure,  start = c(2008, 7), frequency = 12) 
 ts_sepn   <- ts(data = ts_sepn$Measure,   start = c(2008, 7), frequency = 12)

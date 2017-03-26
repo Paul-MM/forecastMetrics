@@ -23,6 +23,7 @@ shinyUI(function(request){
                     , choices  = c("Leave (Days per FTE)"
                                    , "Workforce (HC)"
                                    , "Workforce (Paid FTE)"
+                                   , "Workforce Utilisation (Paid FTE/HC)"
                                    , "Separation Rate (%)"
                                    , "Average Age (Years)"
                                    , "Average Tenure (Years)"
@@ -38,7 +39,7 @@ shinyUI(function(request){
                                       , selected = "Unplanned Leave")),
         
         # Workforce HeaCount and Paid FTE
-        conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)' || input.sel_hrTS == 'Workforce (Paid FTE)'",
+        conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)' || input.sel_hrTS == 'Workforce (Paid FTE)' || input.sel_hrTS == 'Workforce Utilisation (Paid FTE/HC)'",
                          radioButtons("sel_employType"
                                       , "Select Employment Type:"
                                       , choices = c("Ongoing", "Non-Ongoing"
