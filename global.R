@@ -37,13 +37,13 @@ ts_dsbl    <- read_csv(paste0(dataPath,"forecastMetrics/forecastDsbl.csv"))
 ts_ongDsbl <- read_csv(paste0(dataPath,"forecastMetrics/forecastDsblOng.csv"))
 
 ts_ongUtil <- subset(ts_ongHC, ts_ongHC$date2 >= "2014-03-31")
-ts_ongUtil$Measure <- ts_ongFTE$Measure/ts_ongUtil$Measure
+ts_ongUtil$Measure <- round(ts_ongFTE$Measure/ts_ongUtil$Measure, digits = 2)
 ts_nonUtil <- subset(ts_nonHC, ts_ongHC$date2 >= "2014-03-31")
-ts_nonUtil$Measure <- ts_nonFTE$Measure/ts_nonUtil$Measure
+ts_nonUtil$Measure <- round(ts_nonFTE$Measure/ts_nonUtil$Measure, digits = 2)
 ts_casUtil <- subset(ts_casHC, ts_ongHC$date2 >= "2014-03-31")
-ts_casUtil$Measure <- ts_casFTE$Measure/ts_casUtil$Measure
+ts_casUtil$Measure <- round(ts_casFTE$Measure/ts_casUtil$Measure, digits = 2)
 ts_totUtil <- subset(ts_totHC, ts_ongHC$date2 >= "2014-03-31")
-ts_totUtil$Measure <- ts_totFTE$Measure/ts_totUtil$Measure
+ts_totUtil$Measure <- round(ts_totFTE$Measure/ts_totUtil$Measure, digits = 2)
 
 # TS OBJECTS ---------------------------------------------------------------------------------------
 
