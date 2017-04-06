@@ -35,17 +35,20 @@ shinyUI(function(request){
         conditionalPanel(condition = "input.sel_hrTS == 'Leave (Days per FTE)'",
                          radioButtons("sel_leaveType"
                                       , "Select Leave Type:"
-                                      , choices = c("Unplanned Leave", "Planned Leave", "Total Leave")
+                                      , choices = c("Unplanned Leave", "Planned Leave", 
+                                                    "Total Leave")
                                       , selected = "Unplanned Leave")),
         
         # Workforce HeaCount and Paid FTE
-        conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)' || input.sel_hrTS == 'Workforce (Paid FTE)' || input.sel_hrTS == 'Workforce Utilisation (% of Paid FTE/HC)'",
+        conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)' || 
+                                      input.sel_hrTS == 'Workforce (Paid FTE)' || 
+                                      input.sel_hrTS == 'Workforce Utilisation (% of Paid FTE/HC)'",
                          radioButtons("sel_employType"
                                       , "Select Employment Type:"
                                       , choices = c("Ongoing", "Non-Ongoing"
                                                     , "Casual", "Total")
                                       , selected = "Ongoing")),
-        
+
         # Separation Rate
         conditionalPanel(condition = "input.sel_hrTS == 'Separation Rate (%)'",
                          radioButtons("sel_sepType"
@@ -72,6 +75,20 @@ shinyUI(function(request){
                                       , "Select Employment Type:"
                                       , choices = c("Ongoing", "Total")
                                       , selected = "Ongoing")),
+        
+        # Add choice to display certain metrics as a count, or percentage of total 
+        conditionalPanel(condition = "input.sel_hrTS == 'Leave (Days per FTE)' &&
+                                      input.sel_leaveType != 'Total Leave' ||
+                                      input.sel_hrTS == 'Workforce (HC)' &&
+                                      input.sel_employType != 'Total' ||
+                                      input.sel_hrTS == 'Workforce (Paid FTE)' &&
+                                      input.sel_employType != 'Total' ||
+                                      input.sel_hrTS == 'Separation Rate (%)' &&
+                                      input.sel_sepType != 'Overall Ongoing'",
+                         radioButtons("sel_calc"
+                                      , "Selection Calculation Type:"
+                                      , choices = c("Count", "Percentage of Total")
+                                      , selected = "Count")),
         
         br(),
         

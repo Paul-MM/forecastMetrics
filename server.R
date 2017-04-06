@@ -6,24 +6,50 @@ shinyServer(function(input, output, session) {
   datasetForeCInput <- reactive({
     
     if (input$sel_hrTS == "Leave (Days per FTE)"){
-      switch(EXPR                   = input$sel_leaveType
-             , "Unplanned Leave"    = ts_upl
-             , "Planned Leave"      = ts_pl
-             , "Total Leave"        = ts_totLv)
+      if (input$sel_calc == "Count"){
+        switch(EXPR                   = input$sel_leaveType
+               , "Unplanned Leave"    = ts_upl
+               , "Planned Leave"      = ts_pl
+               , "Total Leave"        = ts_totLv)
+      } 
+      else if (input$sel_calc == "Percentage of Total"){
+        switch(EXPR                   = input$sel_leaveType
+               , "Unplanned Leave"    = ts_uplpcnt
+               , "Planned Leave"      = ts_plpcnt
+               , "Total Leave"        = ts_totLv)
+      }
     }
     else if (input$sel_hrTS == "Workforce (HC)"){
-      switch(EXPR                   = input$sel_employType
+      if (input$sel_calc == "Count"){
+        switch(EXPR                   = input$sel_employType
              , "Ongoing"            = ts_ongHC
              , "Non-Ongoing"        = ts_nonHC
              , "Casual"             = ts_casHC
              , "Total"              = ts_totHC)
+      }
+      else if (input$sel_calc == "Percentage of Total"){
+        switch(EXPR                   = input$sel_employType
+               , "Ongoing"            = ts_ongHCpcnt
+               , "Non-Ongoing"        = ts_nonHCpcnt
+               , "Casual"             = ts_casHCpcnt
+               , "Total"              = ts_totHC)
+      }
     }
     else if (input$sel_hrTS == "Workforce (Paid FTE)"){
-      switch(EXPR                   = input$sel_employType
+      if (input$sel_calc == "Count"){
+        switch(EXPR                   = input$sel_employType
              , "Ongoing"            = ts_ongFTE
              , "Non-Ongoing"        = ts_nonFTE
              , "Casual"             = ts_casFTE
              , "Total"              = ts_totFTE)
+      }
+      else if (input$sel_calc == "Percentage of Total"){
+        switch(EXPR                   = input$sel_employType
+               , "Ongoing"            = ts_ongFTEpcnt
+               , "Non-Ongoing"        = ts_nonFTEpcnt
+               , "Casual"             = ts_casFTEpcnt
+               , "Total"              = ts_totFTE)
+      }
     }
     else if (input$sel_hrTS == "Workforce Utilisation (% of Paid FTE/HC)"){
       switch(EXPR                   = input$sel_employType
@@ -33,10 +59,18 @@ shinyServer(function(input, output, session) {
              , "Total"              = ts_totUtil)
     }
     else if (input$sel_hrTS == "Separation Rate (%)"){
-      switch(EXPR                   = input$sel_sepType
-             , "Overall Ongoing"    = ts_sepn
-             , "Natural Attrition"  = ts_attr
-             , "Redundancy"         = ts_rdncy)
+      if (input$sel_calc == "Count"){
+        switch(EXPR                   = input$sel_sepType
+               , "Overall Ongoing"    = ts_sepn
+               , "Natural Attrition"  = ts_attr
+               , "Redundancy"         = ts_rdncy)
+      }
+      else if (input$sel_calc == "Percentage of Total"){
+        switch(EXPR                   = input$sel_sepType
+               , "Overall Ongoing"    = ts_sepn
+               , "Natural Attrition"  = ts_attrpcnt
+               , "Redundancy"         = ts_rdncypcnt)
+      }
     }
     else if (input$sel_hrTS == "Average Tenure (Years)"){
       switch(EXPR                   = input$sel_agency
