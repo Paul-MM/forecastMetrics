@@ -5,7 +5,7 @@ library(reshape)
 
 HWplot <- function(ts_object, n.ahead = 4, CI = 0.95, error.ribbon = 'red', line.size = 1){
   
-  # Create ts data ####
+  # Create ts data
   hw_object     <- HoltWinters(ts_object)
   forecast      <- predict(object = hw_object, n.ahead = n.ahead, prediction.interval = TRUE,
                            level = CI)
@@ -17,7 +17,7 @@ HWplot <- function(ts_object, n.ahead = 4, CI = 0.95, error.ribbon = 'red', line
   actual_values <- data.frame(time = round(x = time(hw_object$x), digits = 4)
                               , Actual = c(hw_object$x))
   
-  # Combine data ####
+  # Combine data
   graphset <- merge(x = actual_values, y = fitted_values, by = 'time', all = TRUE)
   graphset <- merge(x = graphset,  y = for_values,  all=TRUE,  by='time')
   
@@ -27,7 +27,7 @@ HWplot <- function(ts_object, n.ahead = 4, CI = 0.95, error.ribbon = 'red', line
                        fitted_values$value_fitted, for_values$value_forecast)
   graphset.melt   <- melt(data = graphset[, c('time', 'Actual', 'Fitted')], id = 'time')
   
-  # Dates decimals to months ####
+  # Dates decimals to months
   
   # Graphset.melt
   date                    <- date_decimal(decimal = graphset.melt$time)
@@ -49,7 +49,7 @@ HWplot <- function(ts_object, n.ahead = 4, CI = 0.95, error.ribbon = 'red', line
   #   lastUpdate <- as.Date(date_decimal(tail(graphset$time[NonNAindex], n = 1)))
   # add layer to ggplot geom_vline(aes(xintercept=as.numeric(lastUpdate)),  lty=2) +
   
-  # Plot ####
+  # Plot
   
   g <- ggplot(data = graphset.melt,  aes(x = dateMonth,  y = value)) +
        geom_ribbon(data = graphset, 

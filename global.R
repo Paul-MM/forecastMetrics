@@ -6,6 +6,9 @@ suppressMessages(library(dplyr))          # data wrangling
 
 source("HWplot.R")                        # ggplot Holt Winters function
 
+# Enable bookmarking for this app
+enableBookmarking(store = "url")
+
 # LOAD DATA ----------------------------------------------------------------------------------------
 
 # Set path for data files
@@ -35,6 +38,7 @@ ts_totFTE    <- read_csv(paste0(dataPath,"forecastMetrics/forecastTotFTE.csv"))
 ts_ongFTEpcnt<- data.frame(Measure=(ts_ongFTE$Measure/ts_totFTE$Measure)*100, date2=ts_totFTE$date2)
 ts_nonFTEpcnt<- data.frame(Measure=(ts_nonFTE$Measure/ts_totFTE$Measure)*100, date2=ts_totFTE$date2)
 ts_casFTEpcnt<- data.frame(Measure=(ts_casFTE$Measure/ts_totFTE$Measure)*100, date2=ts_totFTE$date2)
+
 # Workforce Utilisation (% of Paid FTE/HC)
 ts_ongUtil <- ts_ongHC[ts_ongHC$date2 >= "2014-03-31",]
 ts_ongUtil$Measure <- (ts_ongFTE$Measure/ts_ongUtil$Measure)*100
@@ -44,17 +48,21 @@ ts_casUtil <- ts_casHC[ts_casHC$date2 >= "2014-03-31",]
 ts_casUtil$Measure <- (ts_casFTE$Measure/ts_casUtil$Measure)*100
 ts_totUtil <- ts_totHC[ts_totHC$date2 >= "2014-03-31",]
 ts_totUtil$Measure <- (ts_totFTE$Measure/ts_totUtil$Measure)*100
+
 # Separation Rate (%)
 ts_sepn     <- read_csv(paste0(dataPath,"forecastMetrics/forecastSepn.csv"))
 ts_attr     <- read_csv(paste0(dataPath,"forecastMetrics/forecastAttr.csv"))
 ts_rdncy    <- read_csv(paste0(dataPath,"forecastMetrics/forecastRdncy.csv"))
 ts_attrpcnt <- data.frame(Measure=(ts_attr$Measure/ts_sepn$Measure)*100, Sepn_Mth=ts_sepn$Sepn_Mth)
 ts_rdncypcnt<- data.frame(Measure=(ts_rdncy$Measure/ts_sepn$Measure)*100, Sepn_Mth=ts_sepn$Sepn_Mth)
+
 # Average Age (Years)
 ts_age     <- read_csv(paste0(dataPath,"forecastMetrics/forecastAge.csv"))
+
 # Average Tenure (Years)
 ts_atoTnr  <- read_csv(paste0(dataPath,"forecastMetrics/forecastAtoTnr.csv"))
 ts_apsTnr  <- read_csv(paste0(dataPath,"forecastMetrics/forecastApsTnr.csv"))
+
 # Diversity (%)
 ts_nesb    <- read_csv(paste0(dataPath,"forecastMetrics/forecastNESB.csv"))
 ts_ongNesb <- read_csv(paste0(dataPath,"forecastMetrics/forecastNESBOng.csv"))
@@ -62,12 +70,13 @@ ts_indg    <- read_csv(paste0(dataPath,"forecastMetrics/forecastIndg.csv"))
 ts_ongIndg <- read_csv(paste0(dataPath,"forecastMetrics/forecastIndgOng.csv"))
 ts_dsbl    <- read_csv(paste0(dataPath,"forecastMetrics/forecastDsbl.csv"))
 ts_ongDsbl <- read_csv(paste0(dataPath,"forecastMetrics/forecastDsblOng.csv"))
+
 # Average Female Salary (% of Average Male Salary)
 ts_avgSal  <- read_csv(paste0(dataPath,"forecastMetrics/forecastAvgSal.csv"))
 
 # TS OBJECTS ---------------------------------------------------------------------------------------
 
-# Planned and Unplanned leave ####
+# Planned and Unplanned leave
 
 # Start date manipulation and time series - unplanned leave
 ts_upl_dt     <- as.data.frame(ts_upl)   # need to coerce tbl.df back to data.frame 
@@ -104,7 +113,7 @@ ts_strt_mth   <- month(ts_plpcnt_dt)
 ts_strt_yr    <- year(ts_plpcnt_dt)
 ts_plpcnt     <- ts(data = ts_plpcnt$R12, start = c(ts_strt_yr,ts_strt_mth), frequency = 12)
 
-# Remaining measures ####
+# Remaining measures
 ts_ongHC      <- ts(data = ts_ongHC$Measure,     start = c(2007, 7), frequency = 12) 
 ts_nonHC      <- ts(data = ts_nonHC$Measure,     start = c(2007, 7), frequency = 12)
 ts_casHC      <- ts(data = ts_casHC$Measure,     start = c(2007, 7), frequency = 12) 
@@ -138,6 +147,3 @@ ts_ongIndg    <- ts(data = ts_ongIndg$Measure,   start = c(2013, 7), frequency =
 ts_dsbl       <- ts(data = ts_dsbl$Measure,      start = c(2013, 7), frequency = 12)
 ts_ongDsbl    <- ts(data = ts_ongDsbl$Measure,   start = c(2013, 7), frequency = 12)
 ts_avgSal     <- ts(data = ts_avgSal$Measure,    start = c(2007, 7), frequency = 12)
-
-# Enable bookmarking for this app
-enableBookmarking(store = "url")
