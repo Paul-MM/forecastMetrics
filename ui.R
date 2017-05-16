@@ -99,6 +99,18 @@ shinyUI(function(request){
                     , step  = 1
                     , value = 6),
         
+        downloadButton(outputId = 'downloadData'
+                       , label  = 'Download Data'
+                       , class  = 'btn-primary'),
+        
+        br(),
+        br(),
+        
+        bookmarkButton(label = "Bookmark"),
+        
+        br(),
+        br(),
+        
         tags$a(href = link, text, target = "_blank")
         
       ),
@@ -106,15 +118,6 @@ shinyUI(function(request){
       mainPanel(
         
         plotlyOutput(outputId = "forecastPlot"),
-        br(),
-        downloadButton(outputId = 'downloadData'
-                       , label  = 'Download Data'
-                       , class  = 'btn-primary'),
-        br(),
-        br(),
-        bookmarkButton(class = 'btn-primary'
-                       , label = "Bookmark"),
-        br(),
         br(),
         dataTableOutput(outputId = "tsTable")
         
