@@ -1,18 +1,15 @@
 shinyUI(function(request){
   
+  # Define link and text for forecasting explanation
+  link <- "https://en.wikipedia.org/wiki/Exponential_smoothing#Triple_exponential_smoothing"
+  text <- "Information on Holt-Winters forecasting"
+  
   fluidPage(
-    
-    # Define link and text for forecasting explanation
-    link <- "https://en.wikipedia.org/wiki/Exponential_smoothing#Triple_exponential_smoothing",
-    text <- "Information on Holt-Winters forecasting",
-      
-    # CSS style for navbar html - added padding-top:50px; to .h2,h2 to accommodate navbar
-    tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.min.css")),
     
     # Navbar HTML
     includeHTML("www/navbar.html"),
       
-    titlePanel("HR Time Series Forecasting"),
+    div(style = "padding-top:50px", titlePanel("HR Time Series Forecasting")),
     
     sidebarLayout(
       
