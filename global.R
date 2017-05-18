@@ -1,8 +1,10 @@
-suppressMessages(library(shiny))          # web framewor
-suppressMessages(library(lubridate))      # data handling
-suppressMessages(library(plotly))         # interactive plots
-suppressMessages(library(readr))          # fast I/O
-suppressMessages(library(dplyr))          # data wrangling 
+suppressPackageStartupMessages({
+  library(shiny)          # web framework
+  library(lubridate)      # data handling
+  library(plotly)         # interactive plots
+  library(readr)          # fast I/O
+  library(dplyr)          # data wrangling 
+})
 
 source("HWplot.R")                        # ggplot Holt Winters function
 
