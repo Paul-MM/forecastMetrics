@@ -22,9 +22,9 @@ shinyUI(function(request){
                                    , "Workforce (Paid FTE)"
                                    , "Workforce Utilisation (% of Paid FTE/HC)"
                                    , "Separation Rate (%)"
+                                   , "Diversity (%)"
                                    , "Average Age (Years)"
                                    , "Average Tenure (Years)"
-                                   , "Diversity (%)"
                                    , "Average Female Salary (% of Average Male Salary)")
                     , selected = "Unplanned Leave (Days per FTE)"),
         
@@ -81,7 +81,8 @@ shinyUI(function(request){
                                       input.sel_hrTS == 'Workforce (Paid FTE)' &&
                                       input.sel_employType != 'Total' ||
                                       input.sel_hrTS == 'Separation Rate (%)' &&
-                                      input.sel_sepType != 'Overall Ongoing'",
+                                      input.sel_sepType != 'Overall Ongoing' ||
+                                      input.sel_hrTS == 'Diversity (%)'",
                          radioButtons("sel_calc"
                                       , "Selection Calculation Type:"
                                       , choices = c("Count", "Percentage of Total")
