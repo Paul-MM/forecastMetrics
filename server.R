@@ -1,5 +1,27 @@
 shinyServer(function(input, output, session) {
   
+  # DYNAMIC UI  ------------------------------------------------------------------------------------
+  
+  output$HR_metric1 <- renderUI({
+  
+    HR_metric1_label <- ifelse(input$sel_task == "Forecast"
+                               , "Choose HR metric to forecast:"
+                               , "Choose first HR metric:")  
+    
+    selectInput(inputId    = "sel_hrTS"
+                , label    = HR_metric1_label
+                , choices  = c("Leave (Days per FTE)"
+                               , "Workforce (HC)"
+                               , "Workforce (Paid FTE)"
+                               , "Workforce Utilisation (% of Paid FTE/HC)"
+                               , "Separation Rate (%)"
+                               , "Average Age (Years)"
+                               , "Average Tenure (Years)"
+                               , "Diversity (%)"
+                               , "Average Female Salary (% of Average Male Salary)")
+                , selected = "Unplanned Leave (Days per FTE)")
+  })
+  
   # UI SWITCH --------------------------------------------------------------------------------------
   
   # Switch data based on ui selection
@@ -88,6 +110,92 @@ shinyServer(function(input, output, session) {
     
   })
   
+  # Switch data based on 2nd ui selection
+  datasetForeCInput_2 <- reactive({
+    
+    if (input$sel_hrTS_2 == "Leave (Days per FTE)"){
+      if (input$sel_calc_2 == "Count"){
+        switch(EXPR                   = input$sel_leaveType_2
+               , "Unplanned Leave"    = ts_upl
+               , "Planned Leave"      = ts_pl
+               , "Total Leave"        = ts_totLv)
+      } else if (input$sel_calc_2 == "Percentage of Total"){
+        switch(EXPR                   = input$sel_leaveType_2
+               , "Unplanned Leave"    = ts_uplpcnt
+               , "Planned Leave"      = ts_plpcnt
+               , "Total Leave"        = ts_totLv)
+      }
+    } else if (input$sel_hrTS_2 == "Workforce (HC)"){
+      if (input$sel_calc_2 == "Count"){
+        switch(EXPR                   = input$sel_employType_2
+               , "Ongoing"              = ts_ongHC
+               , "Non-Ongoing"          = ts_nonHC
+               , "Casual"               = ts_casHC
+               , "Total"                = ts_totHC)
+      } else if (input$sel_calc_2 == "Percentage of Total"){
+        switch(EXPR                   = input$sel_employType_2
+               , "Ongoing"            = ts_ongHCpcnt
+               , "Non-Ongoing"        = ts_nonHCpcnt
+               , "Casual"             = ts_casHCpcnt
+               , "Total"              = ts_totHC)
+      }
+    } else if (input$sel_hrTS_2 == "Workforce (Paid FTE)"){
+      if (input$sel_calc_2 == "Count"){
+        switch(EXPR                   = input$sel_employType_2
+               , "Ongoing"              = ts_ongFTE
+               , "Non-Ongoing"          = ts_nonFTE
+               , "Casual"               = ts_casFTE
+               , "Total"                = ts_totFTE)
+      } else if (input$sel_calc_2 == "Percentage of Total"){
+        switch(EXPR                   = input$sel_employType_2
+               , "Ongoing"            = ts_ongFTEpcnt
+               , "Non-Ongoing"        = ts_nonFTEpcnt
+               , "Casual"             = ts_casFTEpcnt
+               , "Total"              = ts_totFTE)
+      }
+    } else if (input$sel_hrTS_2 == "Workforce Utilisation (% of Paid FTE/HC)"){
+      switch(EXPR                     = input$sel_employType_2
+             , "Ongoing"              = ts_ongUtil
+             , "Non-Ongoing"          = ts_nonUtil
+             , "Casual"               = ts_casUtil
+             , "Total"                = ts_totUtil)
+    }
+    else if (input$sel_hrTS_2 == "Separation Rate (%)"){
+      if (input$sel_calc_2 == "Count"){
+        switch(EXPR                   = input$sel_sepType_2
+               , "Overall Ongoing"    = ts_sepn
+               , "Natural Attrition"  = ts_attr
+               , "Redundancy"         = ts_rdncy)
+      } else if (input$sel_calc_2 == "Percentage of Total"){
+        switch(EXPR                   = input$sel_sepType_2
+               , "Overall Ongoing"    = ts_sepn
+               , "Natural Attrition"  = ts_attrpcnt
+               , "Redundancy"         = ts_rdncypcnt)
+      }
+    } else if (input$sel_hrTS_2 == "Average Tenure (Years)"){
+      switch(EXPR                     = input$sel_agency_2
+             , "ATO"                  = ts_atoTnr
+             , "APS"                  = ts_apsTnr)
+    } else if (input$sel_hrTS_2 == "Diversity (%)"){
+      if (input$sel_employType2_2 == "Total"){
+        switch(EXPR                                               = input$sel_grp_2
+               , "Non-English Speaking Background"                = ts_nesb
+               , "Indigenous"                                     = ts_indg
+               , "Disability"                                     = ts_dsbl)
+      } else if (input$sel_employType2_2 == "Ongoing"){
+        switch(EXPR                                               = input$sel_grp_2
+               , "Non-English Speaking Background"                = ts_ongNesb
+               , "Indigenous"                                     = ts_ongIndg
+               , "Disability"                                     = ts_ongDsbl)
+      }
+    } else {
+      switch(EXPR                                                 = input$sel_hrTS_2
+             , "Average Age (Years)"                              = ts_age 
+             , "Average Female Salary (% of Average Male Salary)" = ts_avgSal)
+    }
+    
+  })
+  
   # DATA -------------------------------------------------------------------------------------------
   
   # Data for download and render table
@@ -128,7 +236,38 @@ shinyServer(function(input, output, session) {
     colnames(graphset)         <- c("Period", "Actual Values", "Forecast Values") # Change colnames
     graphset                   <- graphset[ order(graphset$Period, decreasing = TRUE), ] # Sort DESC
     graphset$`Forecast Values` <- round(x = graphset$`Forecast Values`, digits = 2 )
-    graphset
+    
+    if(input$sel_task == "Forecast") {
+    
+      graphset
+    
+    }
+    
+    else if(input$sel_task == "Compare") {
+      
+      actual_values_2 <- data.frame(time = round(x = time(datasetForeCInput_2()), digits = 3),
+                                  Actual = c(round(datasetForeCInput_2(), digits = 2)))
+      
+      # Date processing for table output
+      date_2         <- date_decimal(decimal = as.numeric(actual_values_2$time))
+      date_2         <- as.Date(x = date_2)
+      date_2         <- round_date(x = date_2, unit = "month")
+      date_2         <- substr(x = date_2, start = 1, stop = 7)
+      actual_values_2[,1] <- date_2
+      
+      # Rename columns
+      colnames(actual_values_2)  <- c("Period", "HR Metric 2") # Change colnames
+      
+      # Merge time series 1 values with time series 2 values
+      compare_df <- merge(x = graphset[is.na(graphset$`Actual Values`) == F,1:2]
+                          , y = actual_values_2
+                          , by = 'Period'
+                          , all = TRUE)
+      colnames(compare_df)[2] <- "HR Metric 1"
+      compare_df <- compare_df[ order(compare_df$Period, decreasing = TRUE), ] # Sort DESC
+      
+      compare_df
+    }
     
   })
 
@@ -162,6 +301,8 @@ shinyServer(function(input, output, session) {
       
     })
     
+    if(input$sel_task == "Forecast") {
+    
     # Initialise progress bar
     withProgress(message = 'Making plot...', value = 0.2, {
       
@@ -189,6 +330,99 @@ shinyServer(function(input, output, session) {
       plotly_build(p) # build
       
     })
+    }
+    
+    else if(input$sel_task == "Compare") {
+      
+      # Initialise progress bar
+      withProgress(message = 'Making plot...', value = 0.2, {
+      
+      metric1_values <- data.frame(dateMonth = round(x = time(datasetForeCInput()), digits = 3),
+                                   value = c(round(datasetForeCInput(), digits = 2)))
+      
+      # Date processing for table output
+      date_2         <- date_decimal(decimal = as.numeric(metric1_values$dateMonth))
+      date_2         <- as.Date(x = date_2)
+      # date_2         <- round_date(x = date_2, unit = "month")
+      # date_2         <- substr(x = date_2, start = 1, stop = 7)
+      metric1_values[,1] <- date_2
+      
+      # ggplot
+      g <- ggplot(data = metric1_values, aes(x = dateMonth, y = value)) +
+        geom_line(col = 'red', size = 1) +
+        # theme(legend.position = 'bottom') +
+        # scale_colour_hue('') +
+        # scale_colour_brewer("Legend", palette = "Set1") +
+        # scale_x_date(breaks = scales::date_breaks("year")) +
+        ylab("") +
+        xlab("") +
+        ggtitle(paste('HR Metric 1 -', ttl)) 
+      
+      incProgress(0.4) # increment progress
+      
+      # Plotly
+      p                    <- plotly_build(g)
+      p$layout$margin$l    <- 50
+      p$layout$xaxis$type  <- "date"
+      
+      incProgress(0.4) # increment progress
+      
+      plotly_build(p) 
+      })  
+    }
+    
+  })
+  
+  output$metric2Plot <- renderPlotly({
+    
+    ttl <- ({
+      if (input$sel_hrTS_2 == "Leave (Days per FTE)"){
+        paste(input$sel_leaveType_2, "(Days per FTE)")
+      } else if (input$sel_hrTS_2 == "Workforce (HC)"){
+        paste(input$sel_hrTS_2, "-", input$sel_employType_2)
+      } else if (input$sel_hrTS_2 == "Workforce (Paid FTE)"){
+        paste(input$sel_hrTS_2, "-", input$sel_employType_2)
+      } else if (input$sel_hrTS_2 == "Workforce Utilisation (% of Paid FTE/HC)"){
+        paste(input$sel_hrTS_2, "-", input$sel_employType_2)
+      } else if (input$sel_hrTS_2 == "Separation Rate (%)"){
+        paste(input$sel_hrTS_2, "-", input$sel_sepType_2)
+      } else if (input$sel_hrTS_2 == "Average Tenure (Years)"){
+        paste(input$sel_hrTS_2, "-", input$sel_agency_2)
+      } else if (input$sel_hrTS_2 == "Diversity (%)"){
+        paste(input$sel_hrTS_2, "-", input$sel_grp_2, "-", input$sel_employType2_2)
+      } else {
+        input$sel_hrTS_2
+      }
+      
+    })
+    
+    metric2_values <- data.frame(dateMonth = round(x = time(datasetForeCInput_2()), digits = 3)
+                                 , value = c(round(datasetForeCInput_2(), digits = 2)))
+    
+    # Date processing for table output
+    date_2         <- date_decimal(decimal = as.numeric(metric2_values$dateMonth))
+    date_2         <- as.Date(x = date_2)
+    # date_2         <- round_date(x = date_2, unit = "month")
+    # date_2         <- substr(x = date_2, start = 1, stop = 7)
+    metric2_values[,1] <- date_2
+    
+    # ggplot
+    g <- ggplot(data = metric2_values, aes(x = dateMonth, y = value)) +
+      geom_line(col = 'purple', size = 1) +
+      # theme(legend.position = 'bottom') +
+      # scale_colour_hue('') +
+      # scale_colour_brewer("Legend", palette = "Set1") +
+      # scale_x_date(breaks = scales::date_breaks("year")) +
+      ylab("") +
+      xlab("") +
+      ggtitle(paste('HR Metric 2 - ', ttl)) 
+    
+    # Plotly
+    p                    <- plotly_build(g)
+    p$layout$margin$l    <- 50
+    p$layout$xaxis$type  <- "date"
+    
+    plotly_build(p)
     
   })
   
