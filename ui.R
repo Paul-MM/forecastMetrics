@@ -89,7 +89,8 @@ shinyUI(function(request){
                                       input.sel_hrTS == 'Workforce (Paid FTE)' &&
                                       input.sel_employType != 'Total' ||
                                       input.sel_hrTS == 'Separation Rate (%)' &&
-                                      input.sel_sepType != 'Overall Ongoing'",
+                                      input.sel_sepType != 'Overall Ongoing' ||
+                                      input.sel_hrTS == 'Diversity (%)'",
                          radioButtons("sel_calc"
                                       , "Selection Calculation Type:"
                                       , choices = c("Count", "Percentage of Total")
