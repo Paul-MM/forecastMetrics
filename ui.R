@@ -21,19 +21,6 @@ shinyUI(function(request){
                      , selected = "Forecast"
                      , inline = TRUE),
         
-        # selectInput(inputId    = "sel_hrTS"
-        #             , label    = "Choose HR metric to forecast:"
-        #             , choices  = c("Leave (Days per FTE)"
-        #                            , "Workforce (HC)"
-        #                            , "Workforce (Paid FTE)"
-        #                            , "Workforce Utilisation (% of Paid FTE/HC)"
-        #                            , "Separation Rate (%)"
-        #                            , "Average Age (Years)"
-        #                            , "Average Tenure (Years)"
-        #                            , "Diversity (%)"
-        #                            , "Average Female Salary (% of Average Male Salary)")
-        #             , selected = "Unplanned Leave (Days per FTE)"),
-        
         uiOutput("HR_metric1"),
         
         # Leave
@@ -92,7 +79,7 @@ shinyUI(function(request){
                                       input.sel_sepType != 'Overall Ongoing' ||
                                       input.sel_hrTS == 'Diversity (%)'",
                          radioButtons("sel_calc"
-                                      , "Selection Calculation Type:"
+                                      , "Select Calculation Type:"
                                       , choices = c("Count", "Percentage of Total")
                                       , selected = "Count")),
         
@@ -106,9 +93,9 @@ shinyUI(function(request){
                                                     , "Workforce (Paid FTE)"
                                                     , "Workforce Utilisation (% of Paid FTE/HC)"
                                                     , "Separation Rate (%)"
+                                                    , "Diversity (%)"
                                                     , "Average Age (Years)"
                                                     , "Average Tenure (Years)"
-                                                    , "Diversity (%)"
                                                     , "Average Female Salary (% of Average Male Salary)")
                                      , selected = "Unplanned Leave (Days per FTE)"),
                          
@@ -116,14 +103,16 @@ shinyUI(function(request){
                          conditionalPanel(condition = "input.sel_hrTS_2 == 'Leave (Days per FTE)'",
                                           radioButtons("sel_leaveType_2"
                                                        , "Select Leave Type:"
-                                                       , choices = c("Unplanned Leave", "Planned Leave", 
-                                                                     "Total Leave")
+                                                       , choices = c("Unplanned Leave"
+                                                                     , "Planned Leave"
+                                                                     , "Total Leave")
                                                        , selected = "Unplanned Leave")),
                          
                          # Workforce HeaCount and Paid FTE
                          conditionalPanel(condition = "input.sel_hrTS_2 == 'Workforce (HC)' || 
-                                      input.sel_hrTS2 == 'Workforce (Paid FTE)' || 
-                                      input.sel_hrTS2 == 'Workforce Utilisation (% of Paid FTE/HC)'",
+                                      input.sel_hrTS_2 == 'Workforce (Paid FTE)' || 
+                                      input.sel_hrTS_2 == 
+                                          'Workforce Utilisation (% of Paid FTE/HC)'",
                                           radioButtons("sel_employType_2"
                                                        , "Select Employment Type:"
                                                        , choices = c("Ongoing", "Non-Ongoing"
@@ -134,12 +123,14 @@ shinyUI(function(request){
                          conditionalPanel(condition = "input.sel_hrTS_2 == 'Separation Rate (%)'",
                                           radioButtons("sel_sepType_2"
                                                        , "Select Separation Type:"
-                                                       , choices = c("Overall Ongoing", "Natural Attrition"
+                                                       , choices = c("Overall Ongoing"
+                                                                     , "Natural Attrition"
                                                                      , "Redundancy")
                                                        , selected = "Overall Ongoing")),
                          
                          # Tenure
-                         conditionalPanel(condition = "input.sel_hrTS_2 == 'Average Tenure (Years)'",
+                         conditionalPanel(condition = 
+                                            "input.sel_hrTS_2 == 'Average Tenure (Years)'",
                                           radioButtons("sel_agency_2"
                                                        , "Select Agency:"
                                                        , choices = c("ATO", "APS")
@@ -149,9 +140,12 @@ shinyUI(function(request){
                          conditionalPanel(condition = "input.sel_hrTS_2 == 'Diversity (%)'",
                                           radioButtons("sel_grp_2"
                                                        , "Select Group:"
-                                                       , choices = c("Non-English Speaking Background"
-                                                                     , "Indigenous", "Disability")
-                                                       , selected = "Non-English Speaking Background"),
+                                                       , choices = 
+                                                         c("Non-English Speaking Background"
+                                                           , "Indigenous"
+                                                           , "Disability")
+                                                       , selected = 
+                                                         "Non-English Speaking Background"),
                                           radioButtons("sel_employType2_2"
                                                        , "Select Employment Type:"
                                                        , choices = c("Ongoing", "Total")
@@ -165,9 +159,10 @@ shinyUI(function(request){
                                       input.sel_hrTS_2 == 'Workforce (Paid FTE)' &&
                                       input.sel_employType_2 != 'Total' ||
                                       input.sel_hrTS_2 == 'Separation Rate (%)' &&
-                                      input.sel_sepType_2 != 'Overall Ongoing'",
+                                      input.sel_sepType_2 != 'Overall Ongoing' ||
+                                      input.sel_hrTS_2 == 'Diversity (%)'",
                                           radioButtons("sel_calc_2"
-                                                       , "Selection Calculation Type:"
+                                                       , "Select Calculation Type:"
                                                        , choices = c("Count", "Percentage of Total")
                                                        , selected = "Count"))
                          ),

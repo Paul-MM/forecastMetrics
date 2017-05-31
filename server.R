@@ -15,9 +15,9 @@ shinyServer(function(input, output, session) {
                                , "Workforce (Paid FTE)"
                                , "Workforce Utilisation (% of Paid FTE/HC)"
                                , "Separation Rate (%)"
+                               , "Diversity (%)"
                                , "Average Age (Years)"
                                , "Average Tenure (Years)"
-                               , "Diversity (%)"
                                , "Average Female Salary (% of Average Male Salary)")
                 , selected = "Unplanned Leave (Days per FTE)")
   })
@@ -193,86 +193,167 @@ shinyServer(function(input, output, session) {
   # Switch data based on 2nd ui selection
   datasetForeCInput_2 <- reactive({
     
-    if (input$sel_hrTS_2 == "Leave (Days per FTE)"){
-      if (input$sel_calc_2 == "Count"){
-        switch(EXPR                   = input$sel_leaveType_2
-               , "Unplanned Leave"    = ts_upl
-               , "Planned Leave"      = ts_pl
-               , "Total Leave"        = ts_totLv)
-      } else if (input$sel_calc_2 == "Percentage of Total"){
-        switch(EXPR                   = input$sel_leaveType_2
-               , "Unplanned Leave"    = ts_uplpcnt
-               , "Planned Leave"      = ts_plpcnt
-               , "Total Leave"        = ts_totLv)
-      }
-    } else if (input$sel_hrTS_2 == "Workforce (HC)"){
-      if (input$sel_calc_2 == "Count"){
-        switch(EXPR                   = input$sel_employType_2
-               , "Ongoing"              = ts_ongHC
-               , "Non-Ongoing"          = ts_nonHC
-               , "Casual"               = ts_casHC
-               , "Total"                = ts_totHC)
-      } else if (input$sel_calc_2 == "Percentage of Total"){
-        switch(EXPR                   = input$sel_employType_2
-               , "Ongoing"            = ts_ongHCpcnt
-               , "Non-Ongoing"        = ts_nonHCpcnt
-               , "Casual"             = ts_casHCpcnt
-               , "Total"              = ts_totHC)
-      }
-    } else if (input$sel_hrTS_2 == "Workforce (Paid FTE)"){
-      if (input$sel_calc_2 == "Count"){
-        switch(EXPR                   = input$sel_employType_2
-               , "Ongoing"              = ts_ongFTE
-               , "Non-Ongoing"          = ts_nonFTE
-               , "Casual"               = ts_casFTE
-               , "Total"                = ts_totFTE)
-      } else if (input$sel_calc_2 == "Percentage of Total"){
-        switch(EXPR                   = input$sel_employType_2
-               , "Ongoing"            = ts_ongFTEpcnt
-               , "Non-Ongoing"        = ts_nonFTEpcnt
-               , "Casual"             = ts_casFTEpcnt
-               , "Total"              = ts_totFTE)
-      }
-    } else if (input$sel_hrTS_2 == "Workforce Utilisation (% of Paid FTE/HC)"){
-      switch(EXPR                     = input$sel_employType_2
-             , "Ongoing"              = ts_ongUtil
-             , "Non-Ongoing"          = ts_nonUtil
-             , "Casual"               = ts_casUtil
-             , "Total"                = ts_totUtil)
-    }
-    else if (input$sel_hrTS_2 == "Separation Rate (%)"){
-      if (input$sel_calc_2 == "Count"){
-        switch(EXPR                   = input$sel_sepType_2
-               , "Overall Ongoing"    = ts_sepn
-               , "Natural Attrition"  = ts_attr
-               , "Redundancy"         = ts_rdncy)
-      } else if (input$sel_calc_2 == "Percentage of Total"){
-        switch(EXPR                   = input$sel_sepType_2
-               , "Overall Ongoing"    = ts_sepn
-               , "Natural Attrition"  = ts_attrpcnt
-               , "Redundancy"         = ts_rdncypcnt)
-      }
-    } else if (input$sel_hrTS_2 == "Average Tenure (Years)"){
-      switch(EXPR                     = input$sel_agency_2
-             , "ATO"                  = ts_atoTnr
-             , "APS"                  = ts_apsTnr)
-    } else if (input$sel_hrTS_2 == "Diversity (%)"){
-      if (input$sel_employType2_2 == "Total"){
-        switch(EXPR                                               = input$sel_grp_2
-               , "Non-English Speaking Background"                = ts_nesb
-               , "Indigenous"                                     = ts_indg
-               , "Disability"                                     = ts_dsbl)
-      } else if (input$sel_employType2_2 == "Ongoing"){
-        switch(EXPR                                               = input$sel_grp_2
-               , "Non-English Speaking Background"                = ts_ongNesb
-               , "Indigenous"                                     = ts_ongIndg
-               , "Disability"                                     = ts_ongDsbl)
-      }
-    } else {
-      switch(EXPR                                                 = input$sel_hrTS_2
-             , "Average Age (Years)"                              = ts_age 
-             , "Average Female Salary (% of Average Male Salary)" = ts_avgSal)
-    }
+    switch(EXPR = input$sel_hrTS_2
+           , "Leave (Days per FTE)" = {
+             
+             # Filter out dates with no data and calculate time series start date
+             df2 <- filter(df, !is.na(df$totR12))
+             strt_mth   <- month(df2$Snpsht_Dt[1])
+             strt_yr    <- year(df2$Snpsht_Dt[1])
+             strt_dt    <- c(strt_yr, strt_mth)
+             
+             if (input$sel_calc_2 == "Count") {
+               if (input$sel_leaveType_2        == "Unplanned Leave") {
+                 ts(data = df2$uplR12, start = strt_dt, frequency = 12)
+               } else if (input$sel_leaveType_2 == "Planned Leave") {
+                 ts(data = df2$plR12, start = strt_dt, frequency = 12)
+               } else if (input$sel_leaveType_2 == "Total Leave") {
+                 ts(data = df2$totR12, start = strt_dt, frequency = 12)
+               }
+             } else if (input$sel_calc_2 == "Percentage of Total") {
+               if (input$sel_leaveType_2        == "Unplanned Leave") {
+                 ts(data = (df2$uplR12/df2$totR12)*100, start = strt_dt, frequency = 12)
+               } else if (input$sel_leaveType_2 == "Planned Leave") {
+                 ts(data = (df2$plR12/df2$totR12)*100, start = strt_dt, frequency = 12)
+               } else if (input$sel_leaveType_2 == "Total Leave") {
+                 ts(data = df2$totR12, start = strt_dt, frequency = 12)
+               }
+             }
+           }
+           , "Workforce (HC)" = {
+             if (input$sel_calc_2 == "Count") {
+               if (input$sel_employType_2        == "Ongoing") {
+                 ts(data = df$ongHC, start = c(2007, 7), frequency = 12)
+               } else if (input$sel_employType_2 == "Non-Ongoing") {
+                 ts(data = df$nonHC, start = c(2007, 7), frequency = 12)
+               } else if (input$sel_employType_2 == "Casual") {
+                 ts(data = df$casHC, start = c(2007, 7), frequency = 12)
+               } else if (input$sel_employType_2 == "Total") {
+                 ts(data = df$totHC, start = c(2007, 7), frequency = 12)
+               }
+             } else if (input$sel_calc_2 == "Percentage of Total") {
+               if (input$sel_employType_2        == "Ongoing") {
+                 ts(data = (df$ongHC/df$totHC)*100, start = c(2007, 7), frequency = 12)
+               } else if (input$sel_employType_2 == "Non-Ongoing") {
+                 ts(data = (df$nonHC/df$totHC)*100, start = c(2007, 7), frequency = 12)
+               } else if (input$sel_employType_2 == "Casual") {
+                 ts(data = (df$casHC/df$totHC)*100, start = c(2007, 7), frequency = 12)
+               } else if (input$sel_employType_2 == "Total") {
+                 ts(data = df$totHC, start = c(2007, 7), frequency = 12)
+               }
+             }
+           }
+           , "Workforce (Paid FTE)" = {
+             df2 <- filter(df, df$Snpsht_Dt >= "2014/03/31")
+             if (input$sel_calc_2 == "Count") {
+               if (input$sel_employType_2        == "Ongoing") {
+                 ts(data = df2$ongFTE, start = c(2014, 3), frequency = 12)
+               } else if (input$sel_employType_2 == "Non-Ongoing") {
+                 ts(data = df2$nonFTE, start = c(2014, 3), frequency = 12)
+               } else if (input$sel_employType_2 == "Casual") {
+                 ts(data = df2$casFTE, start = c(2014, 3), frequency = 12)
+               } else if (input$sel_employType_2 == "Total") {
+                 ts(data = df2$totFTE, start = c(2014, 3), frequency = 12)
+               }
+             } else if (input$sel_calc_2 == "Percentage of Total") {
+               if (input$sel_employType_2        == "Ongoing") {
+                 ts(data = (df2$ongFTE/df2$totFTE)*100, start = c(2014, 3), frequency = 12)
+               } else if (input$sel_employType_2 == "Non-Ongoing") {
+                 ts(data = (df2$nonFTE/df2$totFTE)*100, start = c(2014, 3), frequency = 12)
+               } else if (input$sel_employType_2 == "Casual") {
+                 ts(data = (df2$casFTE/df2$totFTE)*100, start = c(2014, 3), frequency = 12)
+               } else if (input$sel_employType_2 == "Total") {
+                 ts(data = df2$totFTE, start = c(2014, 3), frequency = 12)
+               }
+             }
+           }
+           , "Workforce Utilisation (% of Paid FTE/HC)" = {
+             df2 <- filter(df, df$Snpsht_Dt >= "2014/03/31")
+             if (input$sel_employType_2        == "Ongoing") {
+               ts(data = (df2$ongFTE/df2$ongHC)*100, start = c(2014, 3), frequency = 12)
+             } else if (input$sel_employType_2 == "Non-Ongoing") {
+               ts(data = (df2$nonFTE/df2$nonHC)*100, start = c(2014, 3), frequency = 12)
+             } else if (input$sel_employType_2 == "Casual") {
+               ts(data = (df2$casFTE/df2$casHC)*100, start = c(2014, 3), frequency = 12)
+             } else if (input$sel_employType_2 == "Total") {
+               ts(data = (df2$totFTE/df2$totHC)*100, start = c(2014, 3), frequency = 12)
+             }
+           }
+           # SQL for df does not include separation metrics yet
+           # TODO - add separation values once metric is included in df
+           , "Separation Rate (%)" = {
+             if (input$sel_calc_2 == "Count"){
+               if (input$sel_sepType_2 == "Overall Ongoing") {
+                 ts(data = ts_sepn$Measure,      start = c(2008, 7), frequency = 12)
+               } else if (input$sel_sepType_2 == "Natural Attrition") {
+                 ts(data = ts_attr$Measure,      start = c(2008, 7), frequency = 12)
+               } else if (input$sel_sepType_2 == "Redundancy") {
+                 ts(data = ts_rdncy$Measure,     start = c(2008, 7), frequency = 12)
+               }
+             } else if (input$sel_calc_2 == "Percentage of Total"){
+               if (input$sel_sepType_2 == "Overall Ongoing") {
+                 ts(data = ts_sepn$Measure,      start = c(2008, 7), frequency = 12)
+               } else if (input$sel_sepType_2 == "Natural Attrition") {
+                 ts(data = ts_attrpcnt$Measure,  start = c(2008, 7), frequency = 12)
+               } else if (input$sel_sepType_2 == "Redundancy") {
+                 ts(data = ts_rdncypcnt$Measure, start = c(2008, 7), frequency = 12)
+               }
+             }
+           }
+           , "Diversity (%)" = {
+             df2 <- filter(df, df$Snpsht_Dt >= "2013/07/31")
+             if (input$sel_calc_2 == "Count") {
+               if (input$sel_employType2_2 == "Ongoing") {
+                 if (input$sel_grp_2 == "Non-English Speaking Background") {
+                   ts(data = df2$ongNESB_HC, start = c(2013, 7), frequency = 12)
+                 } else if (input$sel_grp_2 == "Indigenous") {
+                   ts(data = df2$ongIdgn_HC, start = c(2013, 7), frequency = 12)
+                 } else if (input$sel_grp_2 == "Disability") {
+                   ts(data = df2$ongDsbl_HC, start = c(2013, 7), frequency = 12)
+                 }
+               } else if (input$sel_employType2_2 == "Total") {
+                 if (input$sel_grp_2 == "Non-English Speaking Background") {
+                   ts(data = df2$totNESB_HC, start = c(2013, 7), frequency = 12)
+                 } else if (input$sel_grp_2 == "Indigenous") {
+                   ts(data = df2$totIdgn_HC, start = c(2013, 7), frequency = 12)
+                 } else if (input$sel_grp_2 == "Disability") {
+                   ts(data = df2$totDsbl_HC, start = c(2013, 7), frequency = 12)
+                 }
+               }
+             } else if (input$sel_calc_2 == "Percentage of Total") {
+               if (input$sel_employType2_2 == "Ongoing") {
+                 if (input$sel_grp_2 == "Non-English Speaking Background") {
+                   ts(data = df2$ongNESB_pct, start = c(2013, 7), frequency = 12)
+                 } else if (input$sel_grp_2 == "Indigenous") {
+                   ts(data = df2$ongIdgn_pct, start = c(2013, 7), frequency = 12)
+                 } else if (input$sel_grp_2 == "Disability") {
+                   ts(data = df2$ongDsbl_pct, start = c(2013, 7), frequency = 12)
+                 }
+               } else if (input$sel_employType2_2 == "Total") {
+                 if (input$sel_grp_2 == "Non-English Speaking Background") {
+                   ts(data = df2$totNESB_pct, start = c(2013, 7), frequency = 12)
+                 } else if (input$sel_grp_2 == "Indigenous") {
+                   ts(data = df2$totIdgn_pct, start = c(2013, 7), frequency = 12)
+                 } else if (input$sel_grp_2 == "Disability") {
+                   ts(data = df2$totDsbl_pct, start = c(2013, 7), frequency = 12)
+                 }
+               }
+             }
+           }
+           , "Average Age (Years)" = {
+             ts(data = df$age, start = c(2007, 7), frequency = 12)
+           }
+           , "Average Tenure (Years)" = {
+             if (input$sel_agency_2 == "ATO") {
+               ts(data = df$atoTnr, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_agency_2 == "APS") {
+               ts(data = df$apsTnr, start = c(2007, 7), frequency = 12)
+             }
+           }
+           , "Average Female Salary (% of Average Male Salary)" = {
+             ts(data = df$Slry_Pct, start = c(2007, 7), frequency = 12)
+           }
+    )
     
   })
   
