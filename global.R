@@ -19,6 +19,9 @@ data_path <- "/proj/workforce/data/shinyApps/"
 # Load new big df
 df <- read_csv(paste0(data_path,"forecastMetrics/timeSeries.csv"))
 
+# Remove 2nd Snpsht_Dt column
+df <- df[,-34]
+
 # Separation Rate (%)
 ts_sepn      <- read_csv(paste0(data_path, "forecastMetrics/forecastSepn.csv"))
 ts_attr      <- read_csv(paste0(data_path, "forecastMetrics/forecastAttr.csv"))
