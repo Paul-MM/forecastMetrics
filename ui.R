@@ -86,6 +86,11 @@ shinyUI(function(request){
         # Below are the inputs for the second time series user wants to compare with
         conditionalPanel(condition = "input.sel_task == 'Compare'",
                          
+                         # Line to divide HR metric 1 from HR metric 2
+                         div(style = "border-bottom: 2px solid #9e9494"),
+                         
+                         br(),
+                         
                          selectInput(inputId    = "sel_hrTS_2"
                                      , label    = "Choose second HR metric:"
                                      , choices  = c("Leave (Days per FTE)"
@@ -164,7 +169,13 @@ shinyUI(function(request){
                                           radioButtons("sel_calc_2"
                                                        , "Select Calculation Type:"
                                                        , choices = c("Count", "Percentage of Total")
-                                                       , selected = "Count"))
+                                                       , selected = "Count")),
+                         
+                         # Line to divide HR metric 2 from buttons
+                         div(style = "border-bottom: 2px solid #9e9494"),
+                         
+                         br()
+                         
                          ),
         
         # Slider input only appears if user wants to forecast
@@ -197,7 +208,15 @@ shinyUI(function(request){
         plotlyOutput(outputId = "forecastPlot"),
         br(),
         conditionalPanel(condition = "input.sel_task == 'Compare'"
-                         , plotlyOutput("metric2Plot")),
+                         , plotlyOutput("metric2Plot")
+                         , br()
+                         , div(style = "text-align: center; border: 1px solid #e3e3e3
+                                        ; border-left: 6px solid #337ab7"
+                               , uiOutput("correlation")
+                               , uiOutput("correlation2")
+                               , em(p("Caution: Correlation does not imply causation."))
+                               )
+                         ),
         br(),
         dataTableOutput(outputId = "tsTable")
         

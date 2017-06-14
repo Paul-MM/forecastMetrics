@@ -22,6 +22,70 @@ shinyServer(function(input, output, session) {
                 , selected = "Unplanned Leave (Days per FTE)")
   })
   
+  ccorr.coefficient <- reactive({
+    
+    # Gives common times for both time series and their respective values.
+    ts.combined <- ts.intersect(datasetForeCInput(), datasetForeCInput_2())
+    
+    # Gives correlation matrix at lag 0 
+    ccorr.coefficient <- cor(ts.combined)
+    
+    # Extracts the correlation coefficient between both time series at lag 0
+    ccorr.coefficient <- round(ccorr.coefficient[1,2], 2)  
+    
+  })
+  
+  output$correlation <- renderUI({
+    
+    strong(paste("Cross-correlation between corresponding times:", ccorr.coefficient()))
+    
+  })
+  
+  output$correlation2 <- renderUI({
+    
+      ccorr.relationship <- if (ccorr.coefficient() == -1) {
+                              "Perfect negative Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() > -1 && ccorr.coefficient() <= -0.8) {
+                              "Very strong negative Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() > -0.8 && ccorr.coefficient() <= -0.6) {
+                              "Strong negative Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() > -0.6 && ccorr.coefficient() <= -0.4) {
+                              "Moderate negative Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() > -0.4 && ccorr.coefficient() <= -0.2) {
+                              "Weak negative Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() > -0.2 && ccorr.coefficient() < 0) {
+                              "Very weak negative Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() == 0) {
+                              "No Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() > 0 && ccorr.coefficient() < 0.2) {
+                              "Very weak positive Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() >= 0.2 && ccorr.coefficient() < 0.4) {
+                              "Weak positive Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() >= 0.4 && ccorr.coefficient() < 0.6) {
+                              "Moderate positive Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() >= 0.6 && ccorr.coefficient() < 0.8) {
+                              "Strong positive Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() >= 0.8 && ccorr.coefficient() < 1) {
+                              "Very strong positive Cross-correlation"
+                            }
+                            else if(ccorr.coefficient() == 1) {
+                              "Perfect positive Cross-correlation"
+                            }
+    
+    strong(paste("Cross-correlation relationship:", ccorr.relationship))
+  })
+  
   # UI SWITCH --------------------------------------------------------------------------------------
   
   # Switch data based on ui selection and create time series
@@ -504,17 +568,11 @@ shinyServer(function(input, output, session) {
       # Date processing for table output
       date_2         <- date_decimal(decimal = as.numeric(metric1_values$dateMonth))
       date_2         <- as.Date(x = date_2)
-      # date_2         <- round_date(x = date_2, unit = "month")
-      # date_2         <- substr(x = date_2, start = 1, stop = 7)
       metric1_values[,1] <- date_2
       
       # ggplot
       g <- ggplot(data = metric1_values, aes(x = dateMonth, y = value)) +
         geom_line(col = 'red', size = 1) +
-        # theme(legend.position = 'bottom') +
-        # scale_colour_hue('') +
-        # scale_colour_brewer("Legend", palette = "Set1") +
-        # scale_x_date(breaks = scales::date_breaks("year")) +
         ylab("") +
         xlab("") +
         ggtitle(paste('HR Metric 1 -', ttl)) 
@@ -563,17 +621,11 @@ shinyServer(function(input, output, session) {
     # Date processing for table output
     date_2         <- date_decimal(decimal = as.numeric(metric2_values$dateMonth))
     date_2         <- as.Date(x = date_2)
-    # date_2         <- round_date(x = date_2, unit = "month")
-    # date_2         <- substr(x = date_2, start = 1, stop = 7)
     metric2_values[,1] <- date_2
     
     # ggplot
     g <- ggplot(data = metric2_values, aes(x = dateMonth, y = value)) +
       geom_line(col = 'purple', size = 1) +
-      # theme(legend.position = 'bottom') +
-      # scale_colour_hue('') +
-      # scale_colour_brewer("Legend", palette = "Set1") +
-      # scale_x_date(breaks = scales::date_breaks("year")) +
       ylab("") +
       xlab("") +
       ggtitle(paste('HR Metric 2 - ', ttl)) 
