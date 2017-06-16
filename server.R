@@ -177,24 +177,23 @@ shinyServer(function(input, output, session) {
                ts(data = (df2$totFTE/df2$totHC)*100, start = c(2014, 3), frequency = 12)
              }
            }
-           # SQL for df does not include separation metrics yet
-           # TODO - add separation values once metric is included in df
            , "Separation Rate (%)" = {
+             df2 <- filter(df, !is.na(df$Tot_Attr_R12))
              if (input$sel_calc == "Count"){
                if (input$sel_sepType == "Overall Ongoing") {
-                 ts(data = ts_sepn$Measure,      start = c(2008, 7), frequency = 12)
+                 ts(data = df2$Tot_Attr_R12, start = c(2008, 7), frequency = 12)
                } else if (input$sel_sepType == "Natural Attrition") {
-                 ts(data = ts_attr$Measure,      start = c(2008, 7), frequency = 12)
+                 ts(data = df2$Nat_Atrr_R12, start = c(2008, 7), frequency = 12)
                } else if (input$sel_sepType == "Redundancy") {
-                 ts(data = ts_rdncy$Measure,     start = c(2008, 7), frequency = 12)
+                 ts(data = df2$Rdncy_R12,    start = c(2008, 7), frequency = 12)
                }
              } else if (input$sel_calc == "Percentage of Total"){
                if (input$sel_sepType == "Overall Ongoing") {
-                 ts(data = ts_sepn$Measure,      start = c(2008, 7), frequency = 12)
+                 ts(data = df2$Tot_Attr_R12,                     start = c(2008, 7), frequency = 12)
                } else if (input$sel_sepType == "Natural Attrition") {
-                 ts(data = ts_attrpcnt$Measure,  start = c(2008, 7), frequency = 12)
+                 ts(data = df2$Nat_Atrr_R12/df2$Tot_Attr_R12*100,start = c(2008, 7), frequency = 12)
                } else if (input$sel_sepType == "Redundancy") {
-                 ts(data = ts_rdncypcnt$Measure, start = c(2008, 7), frequency = 12)
+                 ts(data = df2$Rdncy_R12/df2$Tot_Attr_R12*100,   start = c(2008, 7), frequency = 12)
                }
              }
            }

@@ -21,10 +21,3 @@ df <- read_csv(paste0(data_path,"forecastMetrics/timeSeries.csv"))
 
 # Remove 2nd Snpsht_Dt column
 df <- df[,-34]
-
-# Separation Rate (%)
-ts_sepn      <- read_csv(paste0(data_path, "forecastMetrics/forecastSepn.csv"))
-ts_attr      <- read_csv(paste0(data_path, "forecastMetrics/forecastAttr.csv"))
-ts_rdncy     <- read_csv(paste0(data_path, "forecastMetrics/forecastRdncy.csv"))
-ts_attrpcnt  <- data.frame(Measure=(ts_attr$Measure/ts_sepn$Measure)*100, Sepn_Mth=ts_sepn$Sepn_Mth)
-ts_rdncypcnt <- data.frame(Measure=(ts_rdncy$Measure/ts_sepn$Measure)*100, Sepn_Mth=ts_sepn$Sepn_Mth)
