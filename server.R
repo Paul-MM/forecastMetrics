@@ -22,70 +22,6 @@ shinyServer(function(input, output, session) {
                 , selected = "Unplanned Leave (Days per FTE)")
   })
   
-  ccorr.coefficient <- reactive({
-    
-    # Gives common times for both time series and their respective values.
-    ts.combined <- ts.intersect(datasetForeCInput(), datasetForeCInput_2())
-    
-    # Gives correlation matrix at lag 0 
-    ccorr.coefficient <- cor(ts.combined)
-    
-    # Extracts the correlation coefficient between both time series at lag 0
-    ccorr.coefficient <- round(ccorr.coefficient[1,2], 2)  
-    
-  })
-  
-  output$correlation <- renderUI({
-    
-    strong(paste("Cross-correlation between corresponding times:", ccorr.coefficient()))
-    
-  })
-  
-  output$correlation2 <- renderUI({
-    
-      ccorr.relationship <- if (ccorr.coefficient() == -1) {
-                              "Perfect negative Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() > -1 && ccorr.coefficient() <= -0.8) {
-                              "Very strong negative Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() > -0.8 && ccorr.coefficient() <= -0.6) {
-                              "Strong negative Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() > -0.6 && ccorr.coefficient() <= -0.4) {
-                              "Moderate negative Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() > -0.4 && ccorr.coefficient() <= -0.2) {
-                              "Weak negative Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() > -0.2 && ccorr.coefficient() < 0) {
-                              "Very weak negative Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() == 0) {
-                              "No Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() > 0 && ccorr.coefficient() < 0.2) {
-                              "Very weak positive Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() >= 0.2 && ccorr.coefficient() < 0.4) {
-                              "Weak positive Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() >= 0.4 && ccorr.coefficient() < 0.6) {
-                              "Moderate positive Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() >= 0.6 && ccorr.coefficient() < 0.8) {
-                              "Strong positive Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() >= 0.8 && ccorr.coefficient() < 1) {
-                              "Very strong positive Cross-correlation"
-                            }
-                            else if(ccorr.coefficient() == 1) {
-                              "Perfect positive Cross-correlation"
-                            }
-    
-    strong(paste("Cross-correlation relationship:", ccorr.relationship))
-  })
-  
   # UI SWITCH --------------------------------------------------------------------------------------
   
   # Switch data based on ui selection and create time series
@@ -417,6 +353,75 @@ shinyServer(function(input, output, session) {
            }
     )
     
+  })
+  
+  # CORRELATION ------------------------------------------------------------------------------------
+  
+  # Correlation Calculation
+  ccorr.coefficient <- reactive({
+
+    # Gives common times for both time series and their respective values.
+    ts.combined <- ts.intersect(datasetForeCInput(), datasetForeCInput_2())
+
+    # Gives correlation matrix at lag 0
+    ccorr.coefficient <- cor(ts.combined)
+
+    # Extracts the correlation coefficient between both time series at lag 0
+    ccorr.coefficient <- round(ccorr.coefficient[1,2], 2)
+
+  })
+
+  # Correlation score message
+  output$correlationScore <- renderUI({
+
+    strong(paste("Cross-correlation between corresponding times:", ccorr.coefficient()))
+
+  })
+
+  # Correlation significance message
+  output$correlationMessage <- renderUI({
+
+    ccorr.relationship <- if (ccorr.coefficient() == -1) {
+      "Perfect negative Cross-correlation"
+    }
+    else if(ccorr.coefficient() > -1 && ccorr.coefficient() <= -0.8) {
+      "Very strong negative Cross-correlation"
+    }
+    else if(ccorr.coefficient() > -0.8 && ccorr.coefficient() <= -0.6) {
+      "Strong negative Cross-correlation"
+    }
+    else if(ccorr.coefficient() > -0.6 && ccorr.coefficient() <= -0.4) {
+      "Moderate negative Cross-correlation"
+    }
+    else if(ccorr.coefficient() > -0.4 && ccorr.coefficient() <= -0.2) {
+      "Weak negative Cross-correlation"
+    }
+    else if(ccorr.coefficient() > -0.2 && ccorr.coefficient() < 0) {
+      "Very weak negative Cross-correlation"
+    }
+    else if(ccorr.coefficient() == 0) {
+      "No Cross-correlation"
+    }
+    else if(ccorr.coefficient() > 0 && ccorr.coefficient() < 0.2) {
+      "Very weak positive Cross-correlation"
+    }
+    else if(ccorr.coefficient() >= 0.2 && ccorr.coefficient() < 0.4) {
+      "Weak positive Cross-correlation"
+    }
+    else if(ccorr.coefficient() >= 0.4 && ccorr.coefficient() < 0.6) {
+      "Moderate positive Cross-correlation"
+    }
+    else if(ccorr.coefficient() >= 0.6 && ccorr.coefficient() < 0.8) {
+      "Strong positive Cross-correlation"
+    }
+    else if(ccorr.coefficient() >= 0.8 && ccorr.coefficient() < 1) {
+      "Very strong positive Cross-correlation"
+    }
+    else if(ccorr.coefficient() == 1) {
+      "Perfect positive Cross-correlation"
+    }
+
+    strong(paste("Cross-correlation relationship:", ccorr.relationship))
   })
   
   # DATA -------------------------------------------------------------------------------------------

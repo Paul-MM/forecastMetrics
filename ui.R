@@ -212,13 +212,19 @@ shinyUI(function(request){
                          , br()
                          , div(style = "text-align: center; border: 1px solid #e3e3e3
                                         ; border-left: 6px solid #337ab7"
-                               , uiOutput("correlation")
-                               , uiOutput("correlation2")
+                               , uiOutput("correlationScore")
+                               , uiOutput("correlationMessage")
                                , em(p("Caution: Correlation does not imply causation."))
                                )
                          ),
         br(),
-        dataTableOutput(outputId = "tsTable")
+        dataTableOutput(outputId = "tsTable"),
+        
+        # Hide error messages
+        tags$style(type="text/css",
+                   ".shiny-output-error { visibility: hidden; }",
+                   ".shiny-output-error:before { visibility: hidden; }"
+        )
         
       )
     
