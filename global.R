@@ -20,4 +20,4 @@ data_path <- "/proj/workforce/data/shinyApps/"
 df <- read_csv(paste0(data_path,"forecastMetrics/timeSeries.csv"))
 
 # Remove 2nd Snpsht_Dt column
-df <- df[,-34]
+df <- df[, !names(df) %in% "Snpsht_Dt_1"]
