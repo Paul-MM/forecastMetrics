@@ -199,6 +199,9 @@ shinyUI(function(request){
         br(),
         br(),
         
+        uiOutput(outputId = "dt"),
+        br(),
+        
         tags$a(href = link, text, target = "_blank")
         
       ),
