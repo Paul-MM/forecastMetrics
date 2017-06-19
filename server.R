@@ -565,13 +565,13 @@ shinyServer(function(input, output, session) {
       # Initialise progress bar
       withProgress(message = 'Making plot...', value = 0.2, {
       
-      metric1_values <- data.frame(dateMonth = round(x = time(datasetForeCInput()), digits = 3),
-                                   value = c(round(datasetForeCInput(), digits = 2)))
+      # Determines all the recent Snpsht_Dt dates to match the time series
+      mnth.dates <- df$Snpsht_Dt[(length(df$Snpsht_Dt) 
+                                  - length(datasetForeCInput()) + 1):length(df$Snpsht_Dt)]  
       
-      # Date processing for table output
-      date_2         <- date_decimal(decimal = as.numeric(metric1_values$dateMonth))
-      date_2         <- as.Date(x = date_2)
-      metric1_values[,1] <- date_2
+      # Make a df of selected time series and matched Snpsht dates  
+      metric1_values <- data.frame(dateMonth = mnth.dates,
+                                   value = c(round(datasetForeCInput(), digits = 2)))
       
       # ggplot
       g <- ggplot(data = metric1_values, aes(x = dateMonth, y = value)) +
@@ -618,13 +618,13 @@ shinyServer(function(input, output, session) {
       
     })
     
-    metric2_values <- data.frame(dateMonth = round(x = time(datasetForeCInput_2()), digits = 3)
-                                 , value = c(round(datasetForeCInput_2(), digits = 2)))
+    # Determines all the recent Snpsht_Dt dates to match the time series
+    mnth.dates <- df$Snpsht_Dt[(length(df$Snpsht_Dt) 
+                                - length(datasetForeCInput_2()) + 1):length(df$Snpsht_Dt)]
     
-    # Date processing for table output
-    date_2         <- date_decimal(decimal = as.numeric(metric2_values$dateMonth))
-    date_2         <- as.Date(x = date_2)
-    metric2_values[,1] <- date_2
+    # Make a df of selected time series and matched Snpsht dates
+    metric2_values <- data.frame(dateMonth = mnth.dates
+                                 , value = c(round(datasetForeCInput_2(), digits = 2)))
     
     # ggplot
     g <- ggplot(data = metric2_values, aes(x = dateMonth, y = value)) +
