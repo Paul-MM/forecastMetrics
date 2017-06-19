@@ -22,6 +22,14 @@ shinyServer(function(input, output, session) {
                 , selected = "Unplanned Leave (Days per FTE)")
   })
   
+  # Date Comment
+  output$dt <- renderUI({
+    
+    snpsht_dt <- format(max(df$Snpsht_Dt), "%d.%m.%Y")
+    paste0("Data is as at ", snpsht_dt)
+    
+  })
+  
   # UI SWITCH --------------------------------------------------------------------------------------
   
   # Switch data based on ui selection and create time series
