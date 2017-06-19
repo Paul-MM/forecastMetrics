@@ -583,7 +583,7 @@ shinyServer(function(input, output, session) {
       
       # ggplot
       g <- ggplot(data = metric1_values, aes(x = dateMonth, y = value)) +
-        geom_line(col = 'red', size = 1) +
+        geom_line(col = '#00C8D2', size = 1) +
         ylab("") +
         xlab("") +
         ggtitle(paste('HR Metric 1 -', ttl)) 
@@ -636,7 +636,7 @@ shinyServer(function(input, output, session) {
     
     # ggplot
     g <- ggplot(data = metric2_values, aes(x = dateMonth, y = value)) +
-      geom_line(col = 'purple', size = 1) +
+      geom_line(col = '#2B3054', size = 1) +
       ylab("") +
       xlab("") +
       ggtitle(paste('HR Metric 2 - ', ttl)) 
