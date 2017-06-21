@@ -42,8 +42,7 @@ HWplot <- function(ts_object, actual.times, fitted.times, forecast.times, n.ahea
        geom_line(aes(colour = variable), size = line.size) +
        xlab('Time') + 
        ylab('Value') +
-       theme(legend.position = 'bottom') +
-       scale_colour_hue('')
+       theme(legend.position = 'bottom') 
   
   return(g)
   
