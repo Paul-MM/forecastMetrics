@@ -541,9 +541,22 @@ shinyServer(function(input, output, session) {
     
     # Initialise progress bar
     withProgress(message = 'Making plot...', value = 0.2, {
-      
+    
+    # Determines all the recent Snpsht_Dt dates to match the time series  
+    actual.dates <- df$Snpsht_Dt[(length(df$Snpsht_Dt) 
+                                - length(datasetForeCInput()) + 1):length(df$Snpsht_Dt)]  
+    
+    # Determines all the recent Snpsht_Dt dates to match the  fitted time series
+    fitted.dates <- df$Snpsht_Dt[(length(df$Snpsht_Dt) 
+                                  - length(datasetForeCInput()) + 13):length(df$Snpsht_Dt)]
+    
+    # Determines all the forecasted dates
+    forecast.dates <- seq(max(df$Snpsht_Dt) + 1, by = "month", length.out = period + 1) - 1
+    forecast.dates <- forecast.dates[-1]
+        
       # ggplot
-      gg <- HWplot(datasetForeCInput(), n.ahead = period, error.ribbon = "red") + 
+      gg <- HWplot(datasetForeCInput(), actual.times = actual.dates, fitted.times = fitted.dates
+                   , forecast.times = forecast.dates, n.ahead = period, error.ribbon = "red") + 
             scale_x_date(breaks = scales::date_breaks("year")) + # change gridbreaks to yrs
             ylab("") + # remove y labels as they infringe on axis ticks
             xlab("") + # remove x label as it's self explanatory
@@ -578,11 +591,11 @@ shinyServer(function(input, output, session) {
                                   - length(datasetForeCInput()) + 1):length(df$Snpsht_Dt)]  
       
       # Make a df of selected time series and matched Snpsht dates  
-      metric1_values <- data.frame(dateMonth = mnth.dates,
+      metric1_values <- data.frame(pointInTime = mnth.dates,
                                    value = c(round(datasetForeCInput(), digits = 2)))
       
       # ggplot
-      g <- ggplot(data = metric1_values, aes(x = dateMonth, y = value)) +
+      g <- ggplot(data = metric1_values, aes(x = pointInTime, y = value)) +
         geom_line(col = '#00C8D2', size = 1) +
         ylab("") +
         xlab("") +
@@ -631,11 +644,11 @@ shinyServer(function(input, output, session) {
                                 - length(datasetForeCInput_2()) + 1):length(df$Snpsht_Dt)]
     
     # Make a df of selected time series and matched Snpsht dates
-    metric2_values <- data.frame(dateMonth = mnth.dates
+    metric2_values <- data.frame(pointInTime = mnth.dates
                                  , value = c(round(datasetForeCInput_2(), digits = 2)))
     
     # ggplot
-    g <- ggplot(data = metric2_values, aes(x = dateMonth, y = value)) +
+    g <- ggplot(data = metric2_values, aes(x = pointInTime, y = value)) +
       geom_line(col = '#2B3054', size = 1) +
       ylab("") +
       xlab("") +
