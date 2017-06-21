@@ -10,23 +10,23 @@ HWplot <- function(ts_object, actual.times, fitted.times, forecast.times, n.ahea
   hw_object     <- HoltWinters(ts_object)
   forecast      <- predict(object = hw_object, n.ahead = n.ahead, prediction.interval = TRUE,
                            level = CI)
-  for_values    <- data.frame(pointInTime = forecast.times
+  for_values    <- data.frame(Date = forecast.times
                               , value_forecast = as.data.frame(forecast)$fit
                               , dev = as.data.frame(forecast)$upr-as.data.frame(forecast)$fit)
-  fitted_values <- data.frame(pointInTime = fitted.times
+  fitted_values <- data.frame(Date = fitted.times
                               , value_fitted=as.data.frame(hw_object$fitted)$xhat)
-  actual_values <- data.frame(pointInTime = actual.times
+  actual_values <- data.frame(Date = actual.times
                               , Actual = c(hw_object$x))
   
   # Combine data
-  graphset <- merge(x = actual_values, y = fitted_values, by = 'pointInTime', all = TRUE)
-  graphset <- merge(x = graphset,  y = for_values,  all=TRUE,  by='pointInTime')
+  graphset <- merge(x = actual_values, y = fitted_values, by = 'Date', all = TRUE)
+  graphset <- merge(x = graphset,  y = for_values,  all=TRUE,  by='Date')
   
   graphset[is.na(graphset$dev),]$dev <- 0
   
   graphset$Fitted <- c(rep(NA, NROW(graphset) - (NROW(for_values) + NROW(fitted_values))), 
                        fitted_values$value_fitted, for_values$value_forecast)
-  graphset.melt   <- melt(data = graphset[, c('pointInTime', 'Actual', 'Fitted')], id = 'pointInTime')
+  graphset.melt   <- melt(data = graphset[, c('Date', 'Actual', 'Fitted')], id = 'Date')
   
   # Round decimals
   graphset$Actual     <- round(x = graphset$Actual, digits = 2)
@@ -35,9 +35,9 @@ HWplot <- function(ts_object, actual.times, fitted.times, forecast.times, n.ahea
   
   # Plot
   
-  g <- ggplot(data = graphset.melt,  aes(x = pointInTime,  y = value)) +
+  g <- ggplot(data = graphset.melt,  aes(x = Date,  y = value)) +
        geom_ribbon(data = graphset, 
-                   aes(x = pointInTime, y = Fitted, ymin = Fitted - dev, ymax = Fitted + dev),
+                   aes(x = Date, y = Fitted, ymin = Fitted - dev, ymax = Fitted + dev),
                    alpha = .2, fill = error.ribbon) +
        geom_line(aes(colour = variable), size = line.size) +
        xlab('Time') + 

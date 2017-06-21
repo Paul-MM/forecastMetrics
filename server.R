@@ -556,12 +556,12 @@ shinyServer(function(input, output, session) {
         
       # ggplot
       gg <- HWplot(datasetForeCInput(), actual.times = actual.dates, fitted.times = fitted.dates
-                   , forecast.times = forecast.dates, n.ahead = period, error.ribbon = "red") + 
+                   , forecast.times = forecast.dates, n.ahead = period, error.ribbon = "#0F979B") + 
             scale_x_date(breaks = scales::date_breaks("year")) + # change gridbreaks to yrs
             ylab("") + # remove y labels as they infringe on axis ticks
             xlab("") + # remove x label as it's self explanatory
             ggtitle(ttl) +
-            scale_colour_brewer("Legend", palette = "Set1") +
+            scale_color_manual(values = c("#0F979B", "#002341")) +
             theme(axis.title.y = element_text(vjust = 2)) +
             theme(axis.title.x = element_text(vjust = -0.5))
         
@@ -591,11 +591,11 @@ shinyServer(function(input, output, session) {
                                   - length(datasetForeCInput()) + 1):length(df$Snpsht_Dt)]  
       
       # Make a df of selected time series and matched Snpsht dates  
-      metric1_values <- data.frame(pointInTime = mnth.dates,
+      metric1_values <- data.frame(Date = mnth.dates,
                                    value = c(round(datasetForeCInput(), digits = 2)))
       
       # ggplot
-      g <- ggplot(data = metric1_values, aes(x = pointInTime, y = value)) +
+      g <- ggplot(data = metric1_values, aes(x = Date, y = value)) +
         geom_line(col = '#00C8D2', size = 1) +
         ylab("") +
         xlab("") +
@@ -644,11 +644,11 @@ shinyServer(function(input, output, session) {
                                 - length(datasetForeCInput_2()) + 1):length(df$Snpsht_Dt)]
     
     # Make a df of selected time series and matched Snpsht dates
-    metric2_values <- data.frame(pointInTime = mnth.dates
+    metric2_values <- data.frame(Date = mnth.dates
                                  , value = c(round(datasetForeCInput_2(), digits = 2)))
     
     # ggplot
-    g <- ggplot(data = metric2_values, aes(x = pointInTime, y = value)) +
+    g <- ggplot(data = metric2_values, aes(x = Date, y = value)) +
       geom_line(col = '#2B3054', size = 1) +
       ylab("") +
       xlab("") +
