@@ -200,9 +200,11 @@ shinyUI(function(request){
         br(),
         
         uiOutput(outputId = "dt"),
-        br(),
         
-        tags$a(href = link, text, target = "_blank")
+        conditionalPanel(condition = "input.sel_task == 'Forecast'"
+                         , br()
+                         , tags$a(href = link, text, target = "_blank")
+                         )
         
       ),
       
