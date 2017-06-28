@@ -18,8 +18,7 @@ shinyServer(function(input, output, session) {
                                , "Diversity (%)"
                                , "Average Age (Years)"
                                , "Average Tenure (Years)"
-                               , "Average Female Salary (% of Average Male Salary)")
-                , selected = "Unplanned Leave (Days per FTE)")
+                               , "Average Female Salary (% of Average Male Salary)"))
   })
   
   # Date Comment
