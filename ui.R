@@ -31,7 +31,7 @@ shinyUI(function(request){
                                                     "Total Leave")
                                       , selected = "Unplanned Leave")),
         
-        # Workforce HeaCount and Paid FTE
+        # Workforce Headcount and Paid FTE
         conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)' || 
                                       input.sel_hrTS == 'Workforce (Paid FTE)' || 
                                       input.sel_hrTS == 'Workforce Utilisation (% of Paid FTE/HC)'",
