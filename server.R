@@ -555,7 +555,7 @@ shinyServer(function(input, output, session) {
         
       # ggplot
       gg <- HWplot(datasetForeCInput(), actual.times = actual.dates, fitted.times = fitted.dates
-                   , forecast.times = forecast.dates, n.ahead = period, error.ribbon = "#0F979B") + 
+                   , forecast.times = forecast.dates, n.ahead = period, error.ribbon = "#002341") + 
             scale_x_date(breaks = scales::date_breaks("year")) + # change gridbreaks to yrs
             ylab("") + # remove y labels as they infringe on axis ticks
             xlab("") + # remove x label as it's self explanatory
