@@ -63,23 +63,23 @@ shinyServer(function(input, output, session) {
            }
            , "Workforce (HC)" = {
              if (input$sel_calc == "Count") {
-               if (input$sel_employType        == "Ongoing") {
+               if (input$sel_hcType == "Ongoing") {
                  ts(data = df$ongHC, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType == "Non-Ongoing") {
+               } else if (input$sel_hcType == "Non-Ongoing") {
                  ts(data = df$nonHC, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType == "Casual") {
+               } else if (input$sel_hcType == "Casual") {
                  ts(data = df$casHC, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType == "Total") {
+               } else if (input$sel_hcType == "Total") {
                  ts(data = df$totHC, start = c(2007, 7), frequency = 12)
                }
              } else if (input$sel_calc == "Percentage of Total") {
-               if (input$sel_employType        == "Ongoing") {
+               if (input$sel_hcType == "Ongoing") {
                  ts(data = (df$ongHC/df$totHC)*100, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType == "Non-Ongoing") {
+               } else if (input$sel_hcType == "Non-Ongoing") {
                  ts(data = (df$nonHC/df$totHC)*100, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType == "Casual") {
+               } else if (input$sel_hcType == "Casual") {
                  ts(data = (df$casHC/df$totHC)*100, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType == "Total") {
+               } else if (input$sel_hcType == "Total") {
                  ts(data = df$totHC, start = c(2007, 7), frequency = 12)
                }
              }
@@ -228,23 +228,23 @@ shinyServer(function(input, output, session) {
            }
            , "Workforce (HC)" = {
              if (input$sel_calc_2 == "Count") {
-               if (input$sel_employType_2        == "Ongoing") {
+               if (input$sel_hcType_2        == "Ongoing") {
                  ts(data = df$ongHC, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType_2 == "Non-Ongoing") {
+               } else if (input$sel_hcType_2 == "Non-Ongoing") {
                  ts(data = df$nonHC, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType_2 == "Casual") {
+               } else if (input$sel_hcType_2 == "Casual") {
                  ts(data = df$casHC, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType_2 == "Total") {
+               } else if (input$sel_hcType_2 == "Total") {
                  ts(data = df$totHC, start = c(2007, 7), frequency = 12)
                }
              } else if (input$sel_calc_2 == "Percentage of Total") {
-               if (input$sel_employType_2        == "Ongoing") {
+               if (input$sel_hcType_2        == "Ongoing") {
                  ts(data = (df$ongHC/df$totHC)*100, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType_2 == "Non-Ongoing") {
+               } else if (input$sel_hcType_2 == "Non-Ongoing") {
                  ts(data = (df$nonHC/df$totHC)*100, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType_2 == "Casual") {
+               } else if (input$sel_hcType_2 == "Casual") {
                  ts(data = (df$casHC/df$totHC)*100, start = c(2007, 7), frequency = 12)
-               } else if (input$sel_employType_2 == "Total") {
+               } else if (input$sel_hcType_2 == "Total") {
                  ts(data = df$totHC, start = c(2007, 7), frequency = 12)
                }
              }
@@ -519,7 +519,7 @@ shinyServer(function(input, output, session) {
       if (input$sel_hrTS == "Leave (Days per FTE)"){
         paste(input$sel_leaveType, "(Days per FTE)")
       } else if (input$sel_hrTS == "Workforce (HC)"){
-        paste(input$sel_hrTS, "-", input$sel_employType)
+        paste(input$sel_hrTS, "-", input$sel_hcType)
       } else if (input$sel_hrTS == "Workforce (Paid FTE)"){
         paste(input$sel_hrTS, "-", input$sel_employType)
       } else if (input$sel_hrTS == "Workforce Utilisation (% of Paid FTE/HC)"){
@@ -621,7 +621,7 @@ shinyServer(function(input, output, session) {
       if (input$sel_hrTS_2 == "Leave (Days per FTE)"){
         paste(input$sel_leaveType_2, "(Days per FTE)")
       } else if (input$sel_hrTS_2 == "Workforce (HC)"){
-        paste(input$sel_hrTS_2, "-", input$sel_employType_2)
+        paste(input$sel_hrTS_2, "-", input$sel_hcType_2)
       } else if (input$sel_hrTS_2 == "Workforce (Paid FTE)"){
         paste(input$sel_hrTS_2, "-", input$sel_employType_2)
       } else if (input$sel_hrTS_2 == "Workforce Utilisation (% of Paid FTE/HC)"){

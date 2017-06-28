@@ -31,16 +31,53 @@ shinyUI(function(request){
                                                     "Total Leave")
                                       , selected = "Unplanned Leave")),
         
-        # Workforce Headcount and Paid FTE
-        conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)' || 
-                                      input.sel_hrTS == 'Workforce (Paid FTE)' || 
+        # Workforce Headcount
+        conditionalPanel(condition = "input.sel_hrTS == 'Workforce (HC)'",
+                         radioButtons("sel_hcType"
+                                      , "Select Employment Type:"
+                                      , choices = c("Ongoing", "Non-Ongoing"
+                                                    , "Casual", "Total")
+                                      , selected = "Ongoing")),
+        
+        # Workforce Headcount - By Site, Ongoing employees
+        conditionalPanel(condition = "input.sel_hrTS   == 'Workforce (HC)' &&
+                                      input.sel_hcType == 'Ongoing'",
+                         selectInput("sel_hcSite"
+                                     , "Select Site:"
+                                     , choices  = c("All sites"
+                                                    , "Adelaide"
+                                                    , "Albury"
+                                                    , "Alice Springs"
+                                                    , "Brisbane"
+                                                    , "Burnie"
+                                                    , "Box Hill"
+                                                    , "Canberra"
+                                                    , "Chermside"
+                                                    , "Dandenong"
+                                                    , "Darwin"
+                                                    , "Gold Coast"
+                                                    , "Geelong"
+                                                    , "Hobart"
+                                                    , "Melbourne"
+                                                    , "Moonee Ponds"
+                                                    , "Maroochydore"
+                                                    , "Newcastle"
+                                                    , "Parramatta"
+                                                    , "Penrith"
+                                                    , "Perth"
+                                                    , "Sydney"
+                                                    , "Townsville")
+                                     , selected = "All sites")),
+                                     
+        # Paid FTE
+        conditionalPanel(condition = "input.sel_hrTS == 'Workforce (Paid FTE)' || 
                                       input.sel_hrTS == 'Workforce Utilisation (% of Paid FTE/HC)'",
                          radioButtons("sel_employType"
                                       , "Select Employment Type:"
                                       , choices = c("Ongoing", "Non-Ongoing"
                                                     , "Casual", "Total")
                                       , selected = "Ongoing")),
-
+        
         # Separation Rate
         conditionalPanel(condition = "input.sel_hrTS == 'Separation Rate (%)'",
                          radioButtons("sel_sepType"
@@ -72,7 +109,7 @@ shinyUI(function(request){
         conditionalPanel(condition = "input.sel_hrTS == 'Leave (Days per FTE)' &&
                                       input.sel_leaveType != 'Total Leave' ||
                                       input.sel_hrTS == 'Workforce (HC)' &&
-                                      input.sel_employType != 'Total' ||
+                                      input.sel_hcType != 'Total' ||
                                       input.sel_hrTS == 'Workforce (Paid FTE)' &&
                                       input.sel_employType != 'Total' ||
                                       input.sel_hrTS == 'Separation Rate (%)' &&
@@ -113,11 +150,47 @@ shinyUI(function(request){
                                                                      , "Total Leave")
                                                        , selected = "Unplanned Leave")),
                          
-                         # Workforce HeaCount and Paid FTE
-                         conditionalPanel(condition = "input.sel_hrTS_2 == 'Workforce (HC)' || 
-                                      input.sel_hrTS_2 == 'Workforce (Paid FTE)' || 
-                                      input.sel_hrTS_2 == 
-                                          'Workforce Utilisation (% of Paid FTE/HC)'",
+                         # Workforce Headcount
+                         conditionalPanel(condition = "input.sel_hrTS_2 == 'Workforce (HC)'",
+                                          radioButtons("sel_hcType_2"
+                                                       , "Select Employment Type:"
+                                                       , choices = c("Ongoing", "Non-Ongoing"
+                                                                     , "Casual", "Total")
+                                                       , selected = "Ongoing")),
+                         
+                         # Workforce Headcount - By Site, Ongoing employees
+                         conditionalPanel(condition = "input.sel_hrTS_2 == 'Workforce (HC)' &&
+                                          input.sel_hcType_2 == 'Ongoing'",
+                                          selectInput("sel_hcSite_2"
+                                                      , "Select Site:"
+                                                      , choices  = c("All sites"
+                                                                     , "Adelaide"
+                                                                     , "Albury"
+                                                                     , "Alice Springs"
+                                                                     , "Brisbane"
+                                                                     , "Burnie"
+                                                                     , "Box Hill"
+                                                                     , "Canberra"
+                                                                     , "Chermside"
+                                                                     , "Dandenong"
+                                                                     , "Darwin"
+                                                                     , "Gold Coast"
+                                                                     , "Geelong"
+                                                                     , "Hobart"
+                                                                     , "Melbourne"
+                                                                     , "Moonee Ponds"
+                                                                     , "Maroochydore"
+                                                                     , "Newcastle"
+                                                                     , "Parramatta"
+                                                                     , "Penrith"
+                                                                     , "Perth"
+                                                                     , "Sydney"
+                                                                     , "Townsville")
+                                                      , selected = "All sites")),
+                         
+                         # Paid FTE
+                         conditionalPanel(condition = "input.sel_hrTS_2 == 'Workforce (Paid FTE)' || 
+                                      input.sel_hrTS_2 == 'Workforce Utilisation (% of Paid FTE/HC)'",
                                           radioButtons("sel_employType_2"
                                                        , "Select Employment Type:"
                                                        , choices = c("Ongoing", "Non-Ongoing"
@@ -160,7 +233,7 @@ shinyUI(function(request){
                          conditionalPanel(condition = "input.sel_hrTS_2 == 'Leave (Days per FTE)' &&
                                       input.sel_leaveType_2 != 'Total Leave' ||
                                       input.sel_hrTS_2 == 'Workforce (HC)' &&
-                                      input.sel_employType_2 != 'Total' ||
+                                      input.sel_hcType_2 != 'Total' ||
                                       input.sel_hrTS_2 == 'Workforce (Paid FTE)' &&
                                       input.sel_employType_2 != 'Total' ||
                                       input.sel_hrTS_2 == 'Separation Rate (%)' &&
