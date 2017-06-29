@@ -64,7 +64,30 @@ shinyServer(function(input, output, session) {
            , "Workforce (HC)" = {
              if (input$sel_calc == "Count") {
                if (input$sel_hcType == "Ongoing") {
-                 ts(data = df$ongHC, start = c(2007, 7), frequency = 12)
+                 switch(input$sel_hcSite
+                        , "All sites"     = ts(data = df$ongHC, start = c(2007, 7), frequency = 12)
+                        , "Adelaide"      = ts(data = df$ongHC_Adelaide, start = c(2007, 7), frequency = 12)
+                        , "Albury"        = ts(data = df$ongHC_Albury, start = c(2007, 7), frequency = 12)
+                        , "Alice Springs" = ts(data = df$ongHC_AliceSprings, start = c(2007, 7), frequency = 12)
+                        , "Brisbane"      = ts(data = df$ongHC_Brisbane, start = c(2007, 7), frequency = 12)
+                        , "Burnie"        = ts(data = df$ongHC_Burnie, start = c(2007, 7), frequency = 12)
+                        , "Box Hill"      = ts(data = df$ongHC_BoxHill, start = c(2007, 7), frequency = 12)
+                        , "Canberra"      = ts(data = df$ongHC_Canberra, start = c(2007, 7), frequency = 12)
+                        , "Chermside"     = ts(data = df$ongHC_Chermside, start = c(2007, 7), frequency = 12)
+                        , "Dandenong"     = ts(data = df$ongHC_Dandenong, start = c(2007, 7), frequency = 12)
+                        , "Darwin"        = ts(data = df$ongHC_Darwin, start = c(2007, 7), frequency = 12)
+                        , "Gold Coast"    = ts(data = df$ongHC_GoldCoast, start = c(2007, 7), frequency = 12)
+                        , "Geelong"       = ts(data = df$ongHC_Geelong, start = c(2007, 7), frequency = 12)
+                        , "Hobart"        = ts(data = df$ongHC_Hobart, start = c(2007, 7), frequency = 12)
+                        , "Melbourne"     = ts(data = df$ongHC_Melbourne, start = c(2007, 7), frequency = 12)
+                        , "Moonee Ponds"  = ts(data = df$ongHC_MooneePonds, start = c(2007, 7), frequency = 12)
+                        , "Maroochydore"  = ts(data = df$ongHC_Maroochydore, start = c(2007, 7), frequency = 12)
+                        , "Newcastle"     = ts(data = df$ongHC_Newcastle, start = c(2007, 7), frequency = 12)
+                        , "Parramatta"    = ts(data = df$ongHC_Parramatta, start = c(2007, 7), frequency = 12)
+                        , "Penrith"       = ts(data = df$ongHC_Penrith, start = c(2007, 7), frequency = 12)
+                        , "Perth"         = ts(data = df$ongHC_Perth, start = c(2007, 7), frequency = 12)
+                        , "Sydney"        = ts(data = df$ongHC_Sydney, start = c(2007, 7), frequency = 12)
+                        , "Townsville"    = ts(data = df$ongHC_Townsville, start = c(2007, 7), frequency = 12))
                } else if (input$sel_hcType == "Non-Ongoing") {
                  ts(data = df$nonHC, start = c(2007, 7), frequency = 12)
                } else if (input$sel_hcType == "Casual") {
@@ -229,7 +252,30 @@ shinyServer(function(input, output, session) {
            , "Workforce (HC)" = {
              if (input$sel_calc_2 == "Count") {
                if (input$sel_hcType_2        == "Ongoing") {
-                 ts(data = df$ongHC, start = c(2007, 7), frequency = 12)
+                 switch(input$sel_hcSite_2
+                        , "All sites"     = ts(data = df$ongHC, start = c(2007, 7), frequency = 12)
+                        , "Adelaide"      = ts(data = df$ongHC_Adelaide, start = c(2007, 7), frequency = 12)
+                        , "Albury"        = ts(data = df$ongHC_Albury, start = c(2007, 7), frequency = 12)
+                        , "Alice Springs" = ts(data = df$ongHC_AliceSprings, start = c(2007, 7), frequency = 12)
+                        , "Brisbane"      = ts(data = df$ongHC_Brisbane, start = c(2007, 7), frequency = 12)
+                        , "Burnie"        = ts(data = df$ongHC_Burnie, start = c(2007, 7), frequency = 12)
+                        , "Box Hill"      = ts(data = df$ongHC_BoxHill, start = c(2007, 7), frequency = 12)
+                        , "Canberra"      = ts(data = df$ongHC_Canberra, start = c(2007, 7), frequency = 12)
+                        , "Chermside"     = ts(data = df$ongHC_Chermside, start = c(2007, 7), frequency = 12)
+                        , "Dandenong"     = ts(data = df$ongHC_Dandenong, start = c(2007, 7), frequency = 12)
+                        , "Darwin"        = ts(data = df$ongHC_Darwin, start = c(2007, 7), frequency = 12)
+                        , "Gold Coast"    = ts(data = df$ongHC_GoldCoast, start = c(2007, 7), frequency = 12)
+                        , "Geelong"       = ts(data = df$ongHC_Geelong, start = c(2007, 7), frequency = 12)
+                        , "Hobart"        = ts(data = df$ongHC_Hobart, start = c(2007, 7), frequency = 12)
+                        , "Melbourne"     = ts(data = df$ongHC_Melbourne, start = c(2007, 7), frequency = 12)
+                        , "Moonee Ponds"  = ts(data = df$ongHC_MooneePonds, start = c(2007, 7), frequency = 12)
+                        , "Maroochydore"  = ts(data = df$ongHC_Maroochydore, start = c(2007, 7), frequency = 12)
+                        , "Newcastle"     = ts(data = df$ongHC_Newcastle, start = c(2007, 7), frequency = 12)
+                        , "Parramatta"    = ts(data = df$ongHC_Parramatta, start = c(2007, 7), frequency = 12)
+                        , "Penrith"       = ts(data = df$ongHC_Penrith, start = c(2007, 7), frequency = 12)
+                        , "Perth"         = ts(data = df$ongHC_Perth, start = c(2007, 7), frequency = 12)
+                        , "Sydney"        = ts(data = df$ongHC_Sydney, start = c(2007, 7), frequency = 12)
+                        , "Townsville"    = ts(data = df$ongHC_Townsville, start = c(2007, 7), frequency = 12))
                } else if (input$sel_hcType_2 == "Non-Ongoing") {
                  ts(data = df$nonHC, start = c(2007, 7), frequency = 12)
                } else if (input$sel_hcType_2 == "Casual") {
@@ -519,7 +565,11 @@ shinyServer(function(input, output, session) {
       if (input$sel_hrTS == "Leave (Days per FTE)"){
         paste(input$sel_leaveType, "(Days per FTE)")
       } else if (input$sel_hrTS == "Workforce (HC)"){
-        paste(input$sel_hrTS, "-", input$sel_hcType)
+        if (input$sel_hcType == "Ongoing") {
+          paste(input$sel_hrTS, "-", input$sel_hcType, "-", input$sel_hcSite)
+        } else {
+          paste(input$sel_hrTS, "-", input$sel_hcType)
+        }
       } else if (input$sel_hrTS == "Workforce (Paid FTE)"){
         paste(input$sel_hrTS, "-", input$sel_employType)
       } else if (input$sel_hrTS == "Workforce Utilisation (% of Paid FTE/HC)"){
@@ -621,7 +671,11 @@ shinyServer(function(input, output, session) {
       if (input$sel_hrTS_2 == "Leave (Days per FTE)"){
         paste(input$sel_leaveType_2, "(Days per FTE)")
       } else if (input$sel_hrTS_2 == "Workforce (HC)"){
-        paste(input$sel_hrTS_2, "-", input$sel_hcType_2)
+        if (input$sel_hcType_2 == "Ongoing") {
+          paste(input$sel_hrTS_2, "-", input$sel_hcType_2, "-", input$sel_hcSite_2)
+        } else {
+          paste(input$sel_hrTS_2, "-", input$sel_hcType_2)
+        }
       } else if (input$sel_hrTS_2 == "Workforce (Paid FTE)"){
         paste(input$sel_hrTS_2, "-", input$sel_employType_2)
       } else if (input$sel_hrTS_2 == "Workforce Utilisation (% of Paid FTE/HC)"){
