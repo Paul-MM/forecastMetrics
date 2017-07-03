@@ -565,7 +565,7 @@ shinyServer(function(input, output, session) {
       if (input$sel_hrTS == "Leave (Days per FTE)"){
         paste(input$sel_leaveType, "(Days per FTE)")
       } else if (input$sel_hrTS == "Workforce (HC)"){
-        if (input$sel_hcType == "Ongoing") {
+        if (input$sel_hcType == "Ongoing" && input$sel_calc == "Count") {
           paste(input$sel_hrTS, "-", input$sel_hcType, "-", input$sel_hcSite)
         } else {
           paste(input$sel_hrTS, "-", input$sel_hcType)
@@ -671,7 +671,7 @@ shinyServer(function(input, output, session) {
       if (input$sel_hrTS_2 == "Leave (Days per FTE)"){
         paste(input$sel_leaveType_2, "(Days per FTE)")
       } else if (input$sel_hrTS_2 == "Workforce (HC)"){
-        if (input$sel_hcType_2 == "Ongoing") {
+        if (input$sel_hcType_2 == "Ongoing" && input$sel_calc_2 == "Count") {
           paste(input$sel_hrTS_2, "-", input$sel_hcType_2, "-", input$sel_hcSite_2)
         } else {
           paste(input$sel_hrTS_2, "-", input$sel_hcType_2)

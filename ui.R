@@ -41,7 +41,8 @@ shinyUI(function(request){
         
         # Workforce Headcount - By Site, Ongoing employees
         conditionalPanel(condition = "input.sel_hrTS   == 'Workforce (HC)' &&
-                                      input.sel_hcType == 'Ongoing'",
+                                      input.sel_hcType == 'Ongoing' &&
+                                      input.sel_calc   == 'Count'",
                          selectInput("sel_hcSite"
                                      , "Select Site:"
                                      , choices  = c("All sites"
@@ -159,8 +160,9 @@ shinyUI(function(request){
                                                        , selected = "Ongoing")),
                          
                          # Workforce Headcount - By Site, Ongoing employees
-                         conditionalPanel(condition = "input.sel_hrTS_2 == 'Workforce (HC)' &&
-                                          input.sel_hcType_2 == 'Ongoing'",
+                         conditionalPanel(condition = "input.sel_hrTS_2   == 'Workforce (HC)' &&
+                                                       input.sel_hcType_2 == 'Ongoing' &&
+                                                       input.sel_calc_2   == 'Count'",
                                           selectInput("sel_hcSite_2"
                                                       , "Select Site:"
                                                       , choices  = c("All sites"
