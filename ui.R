@@ -7,7 +7,7 @@ shinyUI(function(request){
   fluidPage(
     
     # Navbar HTML
-    includeHTML("www/navbar.html"),
+    includeHTML("/proj/workforce/www/apache/apps/navbar.html"),
       
     div(style = "padding-top:50px", titlePanel("HR Time Series Forecasting")),
     
