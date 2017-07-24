@@ -8,8 +8,12 @@ shinyUI(function(request){
     
     # Navbar HTML
     includeHTML("/proj/workforce/www/apache/apps/navbar.html"),
-      
+    
+    # Navbar padding
     div(style = "padding-top:50px", titlePanel("HR Time Series Forecasting")),
+    
+    # Piwik web analytics     
+    tags$head(includeScript("www/piwik.js")),
     
     sidebarLayout(
       
