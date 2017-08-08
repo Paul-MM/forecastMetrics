@@ -1,12 +1,13 @@
 suppressPackageStartupMessages({
   library(shiny)          # web framework
-  library(lubridate)      # data handling
+  library(lubridate)      # date handling
   library(plotly)         # interactive plots
   library(readr)          # fast I/O
   library(dplyr)          # data wrangling 
 })
 
-source("HWplot.R")                        # ggplot Holt Winters function
+# ggplot Holt Winters function
+source("HWplot.R")
 
 # Enable bookmarking for this app
 enableBookmarking(store = "url")
