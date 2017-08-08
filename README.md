@@ -18,7 +18,8 @@ and the dependencies listed under [Built With](#built-with).
 * [Shiny](https://shiny.rstudio.com/) - Web Framework for R
 * [Plotly](https://plot.ly/r/) - Interactive Plots
 * [readr](https://cran.r-project.org/web/packages/readr/README.html) - Fast I/O of tabular data
-* [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) - Pipe operators
+* [lubridate](https://cran.r-project.org/package=lubridate) - Date handling
+* [dplyr](http://dplyr.tidyverse.org/) - data wrangling
 
 ### Package Versions Used
 A full list of packages used for this application can be found in the packrat.lock file.
