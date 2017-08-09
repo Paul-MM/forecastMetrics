@@ -2,7 +2,7 @@
 
 View and compare a range of workforce related time series.
 
-![Application Screenshot]()
+![Application Screenshot](./AppScreenshot.PNG)
 
 ## Prerequisites
 
