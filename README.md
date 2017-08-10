@@ -22,7 +22,7 @@ and the dependencies listed under [Built With](#built-with).
 * [dplyr](http://dplyr.tidyverse.org/) - data wrangling
 
 ### Package Versions Used
-A full list of packages used for this application can be found in the packrat.lock file.
+A full list of packages used for this application can be found in the [packrat.lock](./packrat/packrat.lock) file.
 
 ## Authors
 [List of contributors](http://gitlab.radlab.local/workforce/bivariateDmgs/graphs/master)
