@@ -15,10 +15,10 @@ enableBookmarking(store = "url")
 # LOAD DATA ----------------------------------------------------------------------------------------
 
 # Set path for data files
-data_path <- "/proj/workforce/data/shinyApps/"
+dataPath <- "/proj/workforce/data/shinyApps/"
 
 # Load new big df
-df <- read_csv(paste0(data_path,"forecastMetrics/timeSeries.csv"))
+df <- read_csv(paste0(dataPath,"forecastMetrics/timeSeries.csv"))
 
 # Remove 2nd Snpsht_Dt column
 df <- df[, !names(df) %in% "Snpsht_Dt_1"]

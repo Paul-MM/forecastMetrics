@@ -279,6 +279,7 @@ shinyUI(function(request){
         br(),
         
         uiOutput(outputId = "dt"),
+        uiOutput(outputId = "retrieveDate"),
         
         conditionalPanel(condition = "input.sel_task == 'Forecast'"
                          , br()

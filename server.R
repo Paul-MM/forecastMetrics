@@ -1,5 +1,22 @@
 shinyServer(function(input, output, session) {
   
+  # DATE FOR UI ------------------------------------------------------------------------------------
+  
+  # Snapshot Date
+  output$dt <- renderUI({
+    
+    snpsht_dt <- format(max(df$Snpsht_Dt), "%d.%m.%Y")
+    paste0("Data is as at ", snpsht_dt)
+    
+  })
+  
+  # Retrieved Date
+  output$retrieveDate <- renderUI({
+    retrieve.date <- format(file.mtime(paste0(dataPath, "forecastMetrics/timeSeries.csv"))
+                            , '%d.%m.%Y')
+    paste0('Retrieved on ', retrieve.date)
+  })
+  
   # DYNAMIC UI  ------------------------------------------------------------------------------------
   
   output$HR_metric1 <- renderUI({
@@ -19,14 +36,6 @@ shinyServer(function(input, output, session) {
                                , "Average Age (Years)"
                                , "Average Tenure (Years)"
                                , "Average Female Salary (% of Average Male Salary)"))
-  })
-  
-  # Date Comment
-  output$dt <- renderUI({
-    
-    snpsht_dt <- format(max(df$Snpsht_Dt), "%d.%m.%Y")
-    paste0("Data is as at ", snpsht_dt)
-    
   })
   
   # UI SWITCH --------------------------------------------------------------------------------------
