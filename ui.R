@@ -125,6 +125,24 @@ shinyUI(function(request){
                                       , choices = c("Count", "Percentage of Total")
                                       , selected = "Count")),
         
+        # Classification
+        conditionalPanel(condition = "input.sel_hrTS == 'Average Female Salary (% of Average Male Salary)'",
+                         selectInput("sel_hcClass"
+                                     , "Select Classification:"
+                                     , choices  = c("All"
+                                                    , "APS1"
+                                                    , "APS2"
+                                                    , "APS3"
+                                                    , "APS4"
+                                                    , "APS5"
+                                                    , "APS6"
+                                                    , "EL1"
+                                                    , "EL21"
+                                                    , "EL22"
+                                                    , "SES1"
+                                                    , "SES2&3")
+                                     , selected = "All")),
+        
         # Below are the inputs for the second time series user wants to compare with
         conditionalPanel(condition = "input.sel_task == 'Compare'",
                          
@@ -249,6 +267,25 @@ shinyUI(function(request){
                                                        , "Select Calculation Type:"
                                                        , choices = c("Count", "Percentage of Total")
                                                        , selected = "Count")),
+                         
+                         # Classification
+                         conditionalPanel(condition = "input.sel_hrTS == 
+                                          'Average Female Salary (% of Average Male Salary)'",
+                                          selectInput("sel_hcClass_2"
+                                                      , "Select Classification:"
+                                                      , choices  = c("All"
+                                                                     , "APS1"
+                                                                     , "APS2"
+                                                                     , "APS3"
+                                                                     , "APS4"
+                                                                     , "APS5"
+                                                                     , "APS6"
+                                                                     , "EL1"
+                                                                     , "EL21"
+                                                                     , "EL22"
+                                                                     , "SES1"
+                                                                     , "SES2&3")
+                                                      , selected = "All")),
                          
                          # Line to divide HR metric 2 from buttons
                          div(style = "border-bottom: 2px solid #9e9494"),

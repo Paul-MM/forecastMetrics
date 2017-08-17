@@ -223,7 +223,31 @@ shinyServer(function(input, output, session) {
              }
            }
            , "Average Female Salary (% of Average Male Salary)" = {
-             ts(data = df$Slry_Pct, start = c(2007, 7), frequency = 12)
+             if (input$sel_hcClass == "All") {
+               ts(data = df$Slry_Pct, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "APS1") {
+               ts(data = df$Slry_PctAPS1, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "APS2") {
+               ts(data = df$Slry_PctAPS2, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "APS3") {
+               ts(data = df$Slry_PctAPS3, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "APS4") {
+               ts(data = df$Slry_PctAPS4, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "APS5") {
+               ts(data = df$Slry_PctAPS5, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "APS6") {
+               ts(data = df$Slry_PctAPS6, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "EL1") {
+               ts(data = df$Slry_PctEL1, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "EL21") {
+               ts(data = df$Slry_PctEL21, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "EL22") {
+               ts(data = df$Slry_PctEL22, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "SES1") {
+               ts(data = df$Slry_PctSES1, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass == "SES2&3") {
+               ts(data = df$Slry_PctSES2_3, start = c(2007, 7), frequency = 12)
+             }
            }
            )
   })
@@ -411,7 +435,31 @@ shinyServer(function(input, output, session) {
              }
            }
            , "Average Female Salary (% of Average Male Salary)" = {
-             ts(data = df$Slry_Pct, start = c(2007, 7), frequency = 12)
+             if (input$sel_hcClass_2 == "All") {
+               ts(data = df$Slry_Pct, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "APS1") {
+               ts(data = df$Slry_PctAPS1, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "APS2") {
+               ts(data = df$Slry_PctAPS2, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "APS3") {
+               ts(data = df$Slry_PctAPS3, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "APS4") {
+               ts(data = df$Slry_PctAPS4, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "APS5") {
+               ts(data = df$Slry_PctAPS5, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "APS6") {
+               ts(data = df$Slry_PctAPS6, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "EL1") {
+               ts(data = df$Slry_PctEL1, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "EL21") {
+               ts(data = df$Slry_PctEL21, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "EL22") {
+               ts(data = df$Slry_PctEL22, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "SES1") {
+               ts(data = df$Slry_PctSES1, start = c(2007, 7), frequency = 12)
+             } else if (input$sel_hcClass_2 == "SES2&3") {
+               ts(data = df$Slry_PctSES2_3, start = c(2007, 7), frequency = 12)
+             }
            }
     )
     
