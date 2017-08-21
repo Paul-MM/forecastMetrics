@@ -68,7 +68,7 @@ $ Tot_Attr_R12         (dbl) NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 6.3
 A full list of packages used for this application can be found in the [packrat.lock](./packrat/packrat.lock) file.
 
 ## Authors
-[List of contributors](http://gitlab.radlab.local/workforce/bivariateDmgs/graphs/master)
+[List of contributors](http://gitlab.radlab.local/workforce/shinyApps/forecastMetrics/graphs/master)
 
 ## License
 
