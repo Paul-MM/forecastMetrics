@@ -14,5 +14,6 @@
 /cache/
 # packrat related
 packrat/lib*/
+packrat/src*/
 # leftovers
 *~
